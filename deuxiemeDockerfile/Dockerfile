@@ -17,5 +17,5 @@ RUN apt clean
 EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
-CMD ["/etc/init.d/mariadb","-DFOREGROUND"]
 CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
+CMD ["mysqld"]
