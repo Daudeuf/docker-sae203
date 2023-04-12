@@ -5,9 +5,9 @@ FROM debian:latest
 RUN apt update
 RUN apt install -y apache2
 RUN apt install -y mariadb-server
-RUN apt clean
+RUN apt install -y php libapache2-mod-php php-mysql
 
-RUN ["/etc/init.d/mariadb", "start"]
+RUN apt clean
 
 # Copier les fichiers de l'hôte vers l'image
 # COPY ./html /var/www/html
@@ -17,4 +17,5 @@ RUN ["/etc/init.d/mariadb", "start"]
 EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
+CMD ["/etc/init.d/mariadb","-DFOREGROUND"]
 CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
