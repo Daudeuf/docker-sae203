@@ -4,8 +4,8 @@ FROM debian:latest
 # Installer des services et des packages
 RUN apt update
 RUN apt install -y apache2
+RUN apt install -y mariadb-server
 RUN apt clean
-#    apt-get -y install mariadb-server
 
 # Copier les fichiers de l'hôte vers l'image
 # COPY ./html /var/www/html
