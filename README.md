@@ -1,5 +1,7 @@
 # docker-sae203
 
-docker build -t projet-final ...
+**Build**
+> docker build -t projet-final .
 
-docker run --rm -p 80:80 projet-final
+**Run**
+> docker run --rm -p 80:80 projet-final
