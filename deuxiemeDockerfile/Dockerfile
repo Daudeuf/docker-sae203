@@ -8,10 +8,8 @@ RUN apt install -y mariadb-server
 RUN apt install -y php libapache2-mod-php php-mysql
 RUN apt clean
 
-RUN /usr/bin/mysqld_safe
-
 # Exposer le port 80
 EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
-CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
+# CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
