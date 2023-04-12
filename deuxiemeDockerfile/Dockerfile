@@ -6,7 +6,7 @@ RUN apt update
 RUN apt install -y apache2
 RUN apt install -y mariadb-server
 RUN apt clean
-RUN /etc/init.d/mariadb start
+#RUN /etc/init.d/mariadb start
 
 # Copier les fichiers de l'hôte vers l'image
 # COPY ./html /var/www/html
@@ -16,4 +16,4 @@ RUN /etc/init.d/mariadb start
 EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
-CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
+CMD ["/etc/init.d/mariadb", "start;", "/usr/sbin/apache2ctl","-DFOREGROUND"]
