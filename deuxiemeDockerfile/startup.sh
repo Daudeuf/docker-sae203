@@ -5,8 +5,6 @@
   
 # Start the second process
 /etc/init.d/apache2 start &
-
-bash
   
 # Wait for any process to exit
 wait -n
