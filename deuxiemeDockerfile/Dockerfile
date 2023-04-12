@@ -1,10 +1,9 @@
-# Utiliser l'image debia officielle comme image parent
+# Utiliser l'image debian officielle comme image parent
 FROM debian:latest
 
 # Installer des services et des packages
-RUN  apt-get update && \
-    apt-get -y install  \
-    apache2
+RUN apt-get update && \
+    apt-get -y install apache2
 
 # Copier les fichiers de l'hôte vers l'image
 # COPY ./html /var/www/html
