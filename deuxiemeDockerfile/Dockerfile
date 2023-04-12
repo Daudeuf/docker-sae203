@@ -16,4 +16,8 @@ EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
 # CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
-CMD ./startup.sh
+# CMD ./startup.sh
+
+
+ENTRYPOINT ["/bin/sh"]
+CMD ["./startup.sh"]
