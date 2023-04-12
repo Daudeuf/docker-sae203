@@ -8,6 +8,7 @@ RUN apt-get update && \
 
 # Copier les fichiers de l'hôte vers l'image
 # COPY ./html /var/www/html
+COPY ./mariadb_install.sql /home/debian
 
 # Exposer le port 80
 EXPOSE 80
