@@ -13,3 +13,4 @@ EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
 # CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
+CMD ["/usr/bin/mysqld_safe"] 
