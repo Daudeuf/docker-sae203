@@ -15,4 +15,5 @@ RUN apt clean
 EXPOSE 80
 
 # Lancer le service apache au démarrage du conteneur
-CMD ["/etc/init.d/mariadb", "start;", "/usr/sbin/apache2ctl","-DFOREGROUND"]
+CMD ["/etc/init.d/mariadb", "start"]
+CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
