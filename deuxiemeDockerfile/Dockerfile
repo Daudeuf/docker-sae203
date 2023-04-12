@@ -3,12 +3,13 @@ FROM debian:latest
 
 # Installer des services et des packages
 RUN apt-get update && \
-    apt-get -y install apache2 \
-    apt-get -y install mariadb-server
+    apt-get -y install \
+    apache2
+#    apt-get -y install mariadb-server
 
 # Copier les fichiers de l'hôte vers l'image
 # COPY ./html /var/www/html
-COPY ./mariadb_install.sql /home/debian
+#COPY ./mariadb_install.sql /home/debian
 
 # Exposer le port 80
 EXPOSE 80
