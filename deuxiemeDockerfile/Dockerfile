@@ -15,7 +15,7 @@ COPY ./startup.sh /
 # COPY ./html /var/www/html
 # COPY ./mariadb_install.sql /home/debian
 
-ENtRYPOINT ["/startup.sh"]
+ENTRYPOINT ["/startup.sh"]
 
 # Exposer le port 80
 EXPOSE 80
