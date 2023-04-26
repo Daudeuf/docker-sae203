@@ -1,0 +1,3 @@
+GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost' IDENTIFIED BY 'Mrvq6Y0LzzHoTjXteG2nMKK1';
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('hsU3NRLttuCf5lp0TWYQ905U');
+FLUSH PRIVILEGES;
