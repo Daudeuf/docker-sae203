@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test de saisie de texte</title>
+	</head>
+	<body>
+		<h1>Test de saisie de texte</h1>
+		<form>
+			<label for="text-input">Entrez du texte :</label>
+			<input type="text" id="text-input" name="text-input">
+			<button type="submit" id="submit-button">Envoyer</button>
+			<h3 id="text"></h3>
+			<audio id="audio" controls>
+				Your browser does not support the audio element.
+			</audio>
+		</form>
+		<script>
+			const form = document.querySelector('form');
+			const textInput = document.querySelector('#text-input');
+			const submitButton = document.querySelector('#submit-button');
+			const h3 = document.querySelector('#text');
+			const audio = document.querySelector('#audio');
+
+			form.addEventListener('submit', (event) => {
+				event.preventDefault(); // empêcher l'envoi du formulaire
+				const text = textInput.value;
+				fetch('http://localhost:3000/submit', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ text })
+				})
+				.then(response => response.text())
+				.then(data => {
+					console.log(data);
+					textInput.value = '';
+					h3.innerHTML = `Dernier son téléchargé : ${data}`;
+					//var audio = new Audio(`tracks/${data}.mp3`);
+					//audio.play();
+					audio.innerHTML = `<source src="tracks/${data}.mp3" type="audio/mpeg">`;
+				})
+				.catch(error => console.error(error));
+			});
+		</script>
+	</body>
+</html>
