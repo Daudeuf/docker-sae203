@@ -1,4 +1,18 @@
-body
-{
-  background-color: #555150;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body{
+  background-color: #252322;
+}
+
+nav{
+ background-color: #0F0F0F;
+}
+
+h1{
+  color:white;
+  font-family: 'Bebas Neue', cursive;
+}
+
+label{
+  width: 500px;
 }
