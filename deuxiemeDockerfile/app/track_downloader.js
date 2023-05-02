@@ -30,8 +30,7 @@ async function downloadSong(link) {
 
 	// console.log('Attente de l\'élément...');
 	// await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
-	await page.waitForXPath('/html/body/div/div/div[2]/div[1]/div/div[2]/button');
-	//                          
+	await page.waitForXPath('//*[@id="__next"]/div/div[2]/div[1]/div/div[2]/button');
 
 	// console.log('Clic sur le deuxième bouton...');
 	await page.click('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
