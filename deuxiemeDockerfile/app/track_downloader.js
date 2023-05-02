@@ -34,15 +34,15 @@ async function downloadSong(link) {
 	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button')
 
 	// console.log('Clic sur le deuxième bouton...');
-	await page.click('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
+	await page.click('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button');
 
 	// console.log('Attente de l\'élément à scraper...');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.my-5.grid');
+	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.my-5.grid.sm\:grid-cols-2.gap-4.sm\:gap-2 > a:nth-child(1)');
 
 	// console.log('Récupération des données...');
 	const data = await page.evaluate(() => {
 		const element = document.querySelector('#__next > div > div.mt-5.m-auto.text-center');
-		return element.querySelector('div.my-5.grid.sm\\:grid-cols-2.gap-4.sm\\:gap-2 > a:nth-child(1)').href;
+		return element.querySelector('div.my-5.grid.sm\:grid-cols-2.gap-4.sm\:gap-2 > a:nth-child(1)').href;
 	});
 
 	const artiste = await page.evaluate(() => {
