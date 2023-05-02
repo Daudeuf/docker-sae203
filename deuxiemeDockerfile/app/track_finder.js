@@ -3,7 +3,10 @@ const puppeteer = require('puppeteer');
 
 async function findSpotifyTitle(searchTerm) {
 	// console.log('Lancement du navigateur...');
-	const browser = await puppeteer.launch({ headless: false });
+	const browser = await puppeteer.launch({
+  		args: ['--no-sandbox', '--disable-setuid-sandbox'],
+		headless: false
+	});
 	const page = await browser.newPage();
 
 	// Construire l'URL de recherche avec les termes de recherche
