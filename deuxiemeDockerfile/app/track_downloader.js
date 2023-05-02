@@ -23,7 +23,7 @@ async function downloadSong(link) {
 	await page.type('.searchInput', link);
 
 	// console.log('Clic sur le bouton...');
-	await page.click('button.w-full');
+	await page.click('button');
 
 	// console.log('Attente de l\'élément...');
 	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button', {timeout: 5_000});
