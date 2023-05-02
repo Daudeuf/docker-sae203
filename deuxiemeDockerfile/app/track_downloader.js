@@ -26,12 +26,12 @@ async function downloadSong(link) {
 	await page.type('.searchInput', link);
 
 	// console.log('Clic sur le bouton...');
-	await page.click('button.w-full');
+	await page.click('#__next > div > button');
 
 	// console.log('Attente de l\'élément...');
 	// await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
 	// await page.waitForXPath('//*[@id="__next"]/div/div[2]/div[1]/div/div[2]/button');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center')
+	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button')
 
 	// console.log('Clic sur le deuxième bouton...');
 	await page.click('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button');
