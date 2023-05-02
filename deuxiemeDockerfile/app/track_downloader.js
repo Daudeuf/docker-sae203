@@ -22,7 +22,6 @@ async function downloadSong(link) {
 	
 	// console.log('Navigation vers la page...');
 	await page.goto('https://spotifydown.com/fr', {'timeout': 10000, 'waitUntil':'load'});
-	await waitTillHTMLRendered(page)
 	
 
 	// console.log('Remplissage du champ de texte...');
@@ -30,15 +29,10 @@ async function downloadSong(link) {
 
 	// console.log('Clic sur le bouton...');
 	await page.click('#__next > div > button');
-	
-	await new Promise(resolve => setTimeout(resolve, 1000));
-	console.log(await page.content());
 
 	// console.log('Attente de l\'élément...');
-	// await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
-	// await page.waitForXPath('//*[@id="__next"]/div/div[2]/div[1]/div/div[2]/button');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button')
-
+	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button', {timeout: 5_000});
+	
 	// console.log('Clic sur le deuxième bouton...');
 	await page.click('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button');
 
@@ -79,36 +73,5 @@ async function downloadSong(link) {
 
 	return `${artiste} - ${titre}`;
 }
-
-const waitTillHTMLRendered = async (page, timeout = 30000) => {
-  const checkDurationMsecs = 1000;
-  const maxChecks = timeout / checkDurationMsecs;
-  let lastHTMLSize = 0;
-  let checkCounts = 1;
-  let countStableSizeIterations = 0;
-  const minStableSizeIterations = 3;
-
-  while(checkCounts++ <= maxChecks){
-    let html = await page.content();
-    let currentHTMLSize = html.length; 
-
-    let bodyHTMLSize = await page.evaluate(() => document.body.innerHTML.length);
-
-    console.log('last: ', lastHTMLSize, ' <> curr: ', currentHTMLSize, " body html size: ", bodyHTMLSize);
-
-    if(lastHTMLSize != 0 && currentHTMLSize == lastHTMLSize) 
-      countStableSizeIterations++;
-    else 
-      countStableSizeIterations = 0; //reset the counter
-
-    if(countStableSizeIterations >= minStableSizeIterations) {
-      console.log("Page rendered fully..");
-      break;
-    }
-
-    lastHTMLSize = currentHTMLSize;
-    await page.waitForTimeout(checkDurationMsecs);
-  }  
-};
 
 module.exports = downloadSong;
