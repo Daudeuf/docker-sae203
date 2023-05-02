@@ -22,15 +22,15 @@ async function downloadSong(link) {
 	
 	// console.log('Navigation vers la page...');
 	await page.goto('https://spotifydown.com/fr');
-	
-	await new Promise(resolve => setTimeout(resolve, 1000));
-	console.log(await page.content());
 
 	// console.log('Remplissage du champ de texte...');
 	await page.type('.searchInput', link);
 
 	// console.log('Clic sur le bouton...');
 	await page.click('#__next > div > button');
+	
+	await new Promise(resolve => setTimeout(resolve, 1000));
+	console.log(await page.content());
 
 	// console.log('Attente de l\'élément...');
 	// await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
