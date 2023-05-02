@@ -1,60 +1,59 @@
 const form = document.querySelector('form');
 const textInput = document.querySelector('#text-input');
-const submitButton = document.querySelector('#submit-button');
-const h3 = document.querySelector('#text');
+const songInfo = document.querySelector('#songInfo');
 const audio = document.querySelector('#audio');
+const plays_btn = document.querySelector('#plays_btn');
 
-var audio = document.getElementById('audio');
+document.getElementById("plays_btn").addEventListener("click", function() {
+    var audio = document.getElementsByTagName("audio")[0];
+    var playBtn = document.getElementById("play_btn");
+    var pauseBtn = document.getElementById("pause_btn");
 
-// html5 function - toggle play/pause btn and audio
-
-$("#plays_btn").click(function() {
-
-    if (audio.paused == false) {
+    if (!audio.paused) {
         audio.pause();
-        $("#play_btn").show();
-        $("#pause_btn").hide();
+        playBtn.style.display = "block";
+        pauseBtn.style.display = "none";
     } else {
         audio.play();
-        $("#play_btn").hide();
-        $("#pause_btn").show();
+        playBtn.style.display = "none";
+        pauseBtn.style.display = "block";
     }
 });
 
-
-// timeline
+// function for timeline
 
 audio.addEventListener("timeupdate", function() {
     var currentTime = audio.currentTime,
         duration = audio.duration,
         currentTimeMs = audio.currentTime * 1000;
-    $('.progressbar_range').stop(true, true).animate({'width': (currentTime + .25) / duration * 100 + '%'}, 250, 'linear');
+    var progressbarRange = document.querySelector('.progressbar_range');
+    
+    progressbarRange.style.width = (currentTime + 0.25) / duration * 100 + '%';
 });
 
-
-// temps restant
+// count function for timeleft
 
 audio.addEventListener("timeupdate", function() {
     var timeleft = document.getElementById('timeleft'),
-        duration = parseInt( audio.duration ),
-        currentTime = parseInt( audio.currentTime ),
+        duration = parseInt(audio.duration),
+        currentTime = parseInt(audio.currentTime),
         timeLeft = duration - currentTime,
         s, m;
     
     s = timeLeft % 60;
-    m = Math.floor( timeLeft / 60 ) % 60;
+    m = Math.floor(timeLeft / 60) % 60;
     
-    s = s < 10 ? "0"+s : s;
-    m = m < 10 ? "0"+m : m;
+    s = s < 10 ? "0" + s : s;
+    m = m < 10 ? "0" + m : m;
     
-    $('#timeleft').text("-"+m+":"+s);
-    
+    timeleft.textContent = "-" + m + ":" + s;
 });
 
 document.onkeydown=function(evt){
     var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
     if(keyCode == 13)
     {
+        console.log(textInput.value);
         event.preventDefault(); // empêcher l'envoi du formulaire
         const text = textInput.value;
         fetch('http://localhost:3000/submit', {
@@ -68,7 +67,7 @@ document.onkeydown=function(evt){
         .then(data => {
             console.log(data);
             textInput.value = '';
-            h3.innerHTML = `Dernier son téléchargé : ${data}`;
+            songInfo.innerHTML = `Dernier son téléchargé : ${data}`;
             //var audio = new Audio(`tracks/${data}.mp3`);
             //audio.play();
             audio.innerHTML = `<source src="tracks/${data}.mp3" type="audio/mpeg">`;

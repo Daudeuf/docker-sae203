@@ -18,55 +18,59 @@ async function downloadSong(link) {
 	
 	// console.log('Navigation vers la page...');
 	await page.goto('https://spotifydown.com/fr');
-	
+
 	// console.log('Remplissage du champ de texte...');
-	await page.type('#__next > div > div.relative > input', link);
+	await page.type('xpath//html/body/div/div/div[1]/input', link);
 
 	// console.log('Clic sur le bouton...');
-	await page.click('#__next > div > div.relative > button');
+	await page.click('xpath//html/body/div/div/button');
 
 	// console.log('Attente de l\'élément...');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button', {timeout: 5_000});
+	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
 	
 	// console.log('Clic sur le deuxième bouton...');
-	await page.click('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
+	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
 
 	// console.log('Attente de l\'élément à scraper...');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.my-5.grid');
+	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]');
 
 	// console.log('Récupération des données...');
-	const data = await page.evaluate(() => {
-		const element = document.querySelector('#__next > div > div.mt-5.m-auto.text-center');
-		return element.querySelector('div.my-5.grid.sm\\:grid-cols-2.gap-4.sm\\:gap-2 > a:nth-child(1)').href;
-	});
+	const handleLink = await page.$x('/html/body/div/div/div[2]/div[1]/a[1]');
+	let songLink = await page.evaluate(el => el.href, handleLink[0]);
 
-	const artiste = await page.evaluate(() => {
-		const element = document.querySelector('#__next > div > div.mt-5.m-auto.text-center > p.text-submain.my-1');
-		return element.textContent;
-	});
+	const handleTitle = await page.$x('/html/body/div[1]/div/div[2]/p[1]');
+	let title = await page.evaluate(el => el.innerText, handleTitle[0]);
 
-	const titre = await page.evaluate(() => {
-		const element = document.querySelector('#__next > div > div.mt-5.m-auto.text-center > p.font-bold.text-main.mt-2');
-		return element.textContent;
-	});
+	const handleArtist = await page.$x('/html/body/div[1]/div/div[2]/p[2]');
+	let artist = await page.evaluate(el => el.innerText, handleArtist[0]);
 
 	// console.log('Téléchargement du fichier blob...');
-	await page.evaluate(async (data, artiste, titre) => {
+	await page.evaluate(async (data, artist, title) => {
 		const link = document.createElement('a');
 		link.href = data;
-		link.download = `${artiste} - ${titre}.mp3`;
+		link.download = `${artist} - ${title}.mp3`;
 		document.body.appendChild(link);
 		link.click();
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		document.body.removeChild(link);
-	}, data, artiste, titre);
+	}, songLink, artist, title);
 
+	const downloadPath = `${downloadFolder}/${artist} - ${title}.mp3`; // Ajustez le chemin en fonction de votre configuration
+	while (true) {
+		try {
+			await fs.promises.access(downloadPath, fs.constants.R_OK);
+			break;
+		} catch (error) {
+			// Le fichier n'est pas encore disponible, attendez un peu et réessayez
+			await new Promise(resolve => setTimeout(resolve, 250));
+		}
+	}
 	// console.log('Fichier blob téléchargé.');
 
 	// console.log('Fermeture du navigateur...');
 	await browser.close();
 
-	return `${artiste} - ${titre}`;
+	return `${artist} - ${title}`;
 }
 
 module.exports = downloadSong;

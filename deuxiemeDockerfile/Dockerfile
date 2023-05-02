@@ -21,7 +21,7 @@ RUN apt -y install xvfb
 RUN apt -y install supervisor
 
 # Exécuter les commandes SQL dans le fichier init.sql une fois que la base de données MariaDB est démarré
-COPY init.sql /tmp/
+ADD init.sql /tmp/init.sql
 RUN /etc/init.d/mariadb start && \
     mysql -uroot < /tmp/init.sql
 
@@ -53,7 +53,7 @@ RUN apt clean
 # Préparation du serveur node.js
 RUN groupadd -r nodeuser && useradd -rm -g nodeuser -G audio,video nodeuser
 COPY ./app  /home/nodeuser/app/
-COPY ./track_server.sh  /home/nodeuser/
+ADD track_server.sh  /home/nodeuser/track_server.sh
 RUN mkdir /var/www/html/tracks
 RUN chown -R nodeuser:nodeuser /home/nodeuser && \
     chmod -R 777 /home/nodeuser && \
