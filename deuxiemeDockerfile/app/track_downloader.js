@@ -6,11 +6,7 @@ const path = require('path');
 async function downloadSong(link) {
 	// console.log('Lancement du navigateur...');
 	const downloadFolder = "/var/www/html/tracks"; // dossier de téléchargement souhaité
-	const browser = await puppeteer.launch({
-  		executablePath: '/usr/bin/google-chrome',
-  		//args: ['--no-sandbox', '--single-process'],
-		headless: false
-	});
+	const browser = await puppeteer.launch({ headless: false });
 	const page = await browser.newPage();
 
 	// Définir l'emplacement de téléchargement
@@ -21,28 +17,27 @@ async function downloadSong(link) {
 	});
 	
 	// console.log('Navigation vers la page...');
-	await page.goto('https://spotifydown.com/fr', {'timeout': 10000, 'waitUntil':'load'});
+	await page.goto('https://spotifydown.com/fr');
 	
-
 	// console.log('Remplissage du champ de texte...');
 	await page.type('.searchInput', link);
 
 	// console.log('Clic sur le bouton...');
-	await page.click('#__next > div > button');
+	await page.click('button.w-full');
 
 	// console.log('Attente de l\'élément...');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button', {timeout: 5_000});
+	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button', {timeout: 5_000});
 	
 	// console.log('Clic sur le deuxième bouton...');
-	await page.click('#__next > div > div.mt-5.m-auto.text-center > div.mb-12.grid.grid-cols-1.gap-3.m-auto > div > div.flex.items-center.justify-end > button');
+	await page.click('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button');
 
 	// console.log('Attente de l\'élément à scraper...');
-	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.my-5.grid.sm\:grid-cols-2.gap-4.sm\:gap-2 > a:nth-child(1)');
+	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div.my-5.grid');
 
 	// console.log('Récupération des données...');
 	const data = await page.evaluate(() => {
 		const element = document.querySelector('#__next > div > div.mt-5.m-auto.text-center');
-		return element.querySelector('div.my-5.grid.sm\:grid-cols-2.gap-4.sm\:gap-2 > a:nth-child(1)').href;
+		return element.querySelector('div.my-5.grid.sm\\:grid-cols-2.gap-4.sm\\:gap-2 > a:nth-child(1)').href;
 	});
 
 	const artiste = await page.evaluate(() => {
