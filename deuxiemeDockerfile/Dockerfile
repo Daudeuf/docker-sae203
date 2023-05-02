@@ -1,5 +1,5 @@
 # Utiliser l'image debian officielle comme image parent
-FROM --platform=linux/amd64 debian:latest
+FROM debian:latest
 
 # Mode non-interactif pour la configuration de phpMyAdmin
 ENV DEBIAN_FRONTEND=noninteractive
@@ -40,18 +40,13 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt -y install nodejs
 
 # Ajouter la clé GPG de Google pour leur référentiel APT
-#RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-#RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
 # Installez le dernier package de développement Chrome et les polices pour prendre en charge les principaux jeux de caractères (chinois, japonais, arabe, hébreu, thaï et quelques autres)
-#RUN apt update
-#RUN apt install -y google-chrome-stable libxss1 --no-install-recommends
-# RUN rm -rf /var/lib/apt/lists/*
-
-# Set the Chrome repo.
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-RUN apt-get update -qqy --no-install-recommends && apt-get install -qqy --no-install-recommends google-chrome-stable
+RUN apt update && \
+    apt install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros fonts-kacst fonts-freefont-ttf libxss1 --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN apt clean
 
