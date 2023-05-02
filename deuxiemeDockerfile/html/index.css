@@ -15,4 +15,6 @@ h1{
 
 input{
   width:180px;
+  height:40px;
+  border-radius:30Px;
 }
