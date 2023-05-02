@@ -21,7 +21,9 @@ async function downloadSong(link) {
 	});
 	
 	// console.log('Navigation vers la page...');
-	await page.goto('https://spotifydown.com/fr');
+	await page.goto('https://spotifydown.com/fr', {'timeout': 10000, 'waitUntil':'load'});
+	await waitTillHTMLRendered(page)
+	
 
 	// console.log('Remplissage du champ de texte...');
 	await page.type('.searchInput', link);
