@@ -20,7 +20,7 @@ async function downloadSong(link) {
 	});
 	
 	// console.log('Navigation vers la page...');
-	await page.goto('https://spotifydown.com/fr', {timeout: 60000, waitUntil: 'domcontentloaded'});
+	await page.goto('https://spotifydown.com/fr');
 
 	// console.log('Remplissage du champ de texte...');
 	await page.type('.searchInput', link);
