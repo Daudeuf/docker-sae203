@@ -20,10 +20,10 @@ async function downloadSong(link) {
 	await page.goto('https://spotifydown.com/fr');
 	
 	// console.log('Remplissage du champ de texte...');
-	await page.type('.searchInput', link);
+	await page.type('#__next > div > div.relative > input', link);
 
 	// console.log('Clic sur le bouton...');
-	await page.click('button');
+	await page.click('#__next > div > div.relative > button');
 
 	// console.log('Attente de l\'élément...');
 	await page.waitForSelector('#__next > div > div.mt-5.m-auto.text-center > div:nth-child(5) > div > div > div.flex.items-center.justify-end > button', {timeout: 5_000});
