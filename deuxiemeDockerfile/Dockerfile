@@ -48,7 +48,38 @@ RUN apt -y install nodejs
 #RUN apt install -y google-chrome-stable libxss1 --no-install-recommends
 # RUN rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y wget libxss1
+RUN apt-get update && apt-get install -y \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libatspi2.0-0 \
+    libc6 \
+    libcairo2 \
+    libcups2 \
+    libcurl3-gnutls \
+    libcurl3-nss \
+    libcurl4 \
+    libcurl3 \
+    libdbus-1-3 \
+    libdrm2 \
+    libexpat1 \
+    libgbm1 \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libgtk-4-1 \
+    libnspr4 \
+    libnss3 \
+    libpango-1.0-0 \
+    libvulkan1 \
+    libx11-6 \
+    libxcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxkbcommon0 \
+    libxrandr2
+
+RUN apt-get install -y wget
 RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt-get install ./google-chrome-stable_current_amd64.deb
 
