@@ -1,5 +1,5 @@
 # Utiliser l'image debian officielle comme image parent
-FROM debian:latest
+FROM --platform=linux/amd64 debian:latest
 
 # Mode non-interactif pour la configuration de phpMyAdmin
 ENV DEBIAN_FRONTEND=noninteractive
