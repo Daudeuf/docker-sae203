@@ -41,7 +41,7 @@ RUN apt -y install nodejs
 
 # Ajouter la clé GPG de Google pour leur référentiel APT
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-# RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
 # Installez le dernier package de développement Chrome et les polices pour prendre en charge les principaux jeux de caractères (chinois, japonais, arabe, hébreu, thaï et quelques autres)
 RUN apt update
