@@ -7,7 +7,7 @@ async function downloadSong(link) {
 	// console.log('Lancement du navigateur...');
 	const downloadFolder = "/var/www/html/tracks"; // dossier de téléchargement souhaité
 	const browser = await puppeteer.launch({
-  		args: ['--no-sandbox'],
+  		args: ['--no-sandbox', '--single-process'],
 		headless: false
 	});
 	const page = await browser.newPage();
