@@ -54,7 +54,7 @@ async function downloadSong(link) {
 		document.body.removeChild(linkBlob);
 	}, songLink, artist, title);
 
-	const downloadPath = path.join(downloadFolder, `${artist} - ${title}.mp3`);
+	const downloadPath = `${downloadFolder}/${artist} - ${title}.mp3`;
 
 	// console.log('Fichier blob téléchargé');
 	while (true) {
