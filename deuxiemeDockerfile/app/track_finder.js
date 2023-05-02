@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 async function findSpotifyTitle(searchTerm) {
 	// console.log('Lancement du navigateur...');
 	const browser = await puppeteer.launch({
-  		args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  		args: ['--no-sandbox'],
 		headless: false
 	});
 	const page = await browser.newPage();
