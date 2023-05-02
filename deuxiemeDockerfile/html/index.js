@@ -67,11 +67,11 @@ document.onkeydown=function(evt){
         .then(data => {
             console.log(data);
             textInput.value = '';
-            songInfo.innerHTML = `Dernier son téléchargé : ${data}`;
-            //var audio = new Audio(`tracks/${data}.mp3`);
-            //audio.play();
+            songInfo.innerHTML = `${data}`;
+
             audio.innerHTML = `<source src="tracks/${data}.mp3" type="audio/mpeg">`;
             audio.load();
+            audio.play();
         })
         .catch(error => console.error(error));
     }
