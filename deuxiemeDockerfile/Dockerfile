@@ -40,12 +40,12 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt -y install nodejs
 
 # Ajouter la clé GPG de Google pour leur référentiel APT
-# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 # RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
 # Installez le dernier package de développement Chrome et les polices pour prendre en charge les principaux jeux de caractères (chinois, japonais, arabe, hébreu, thaï et quelques autres)
-# RUN apt update
-# RUN apt install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros fonts-kacst fonts-freefont-ttf libxss1 --no-install-recommends
+RUN apt update
+RUN apt install -y google-chrome-stable libxss1 --no-install-recommends
 # RUN rm -rf /var/lib/apt/lists/*
 
 RUN apt clean
@@ -60,7 +60,6 @@ RUN chown -R nodeuser:nodeuser /home/nodeuser && \
     chown -R nodeuser:nodeuser /var/www && \
     chmod -R g+w /var/www
 USER nodeuser
-RUN npm i puppeteer
 RUN cd /home/nodeuser/app && npm install
 USER root
 
