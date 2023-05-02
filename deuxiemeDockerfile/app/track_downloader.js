@@ -7,6 +7,7 @@ async function downloadSong(link) {
 	// console.log('Lancement du navigateur...');
 	const downloadFolder = "/var/www/html/tracks"; // dossier de téléchargement souhaité
 	const browser = await puppeteer.launch({
+  		executablePath: '/usr/bin/google-chrome',
   		//args: ['--no-sandbox', '--single-process'],
 		headless: false
 	});
@@ -21,6 +22,9 @@ async function downloadSong(link) {
 	
 	// console.log('Navigation vers la page...');
 	await page.goto('https://spotifydown.com/fr');
+	
+	await new Promise(resolve => setTimeout(resolve, 1000));
+	console.log(await page.content());
 
 	// console.log('Remplissage du champ de texte...');
 	await page.type('.searchInput', link);
