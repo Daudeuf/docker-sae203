@@ -35,27 +35,28 @@ async function downloadSong(link) {
 	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]');
 
 	// console.log('Récupération des données...');
-	const handleLink = await page.$x('/html/body/div/div/div[2]/div[1]/a[1]');
-	let songLink = await page.evaluate(el => el.href, handleLink[0]);
-
 	const handleTitle = await page.$x('/html/body/div[1]/div/div[2]/p[1]');
 	let title = await page.evaluate(el => el.innerText, handleTitle[0]);
 
 	const handleArtist = await page.$x('/html/body/div[1]/div/div[2]/p[2]');
 	let artist = await page.evaluate(el => el.innerText, handleArtist[0]);
 
+	const handleLink = await page.$x('/html/body/div/div/div[2]/div[1]/a[1]');
+	let songLink = await page.evaluate(el => el.href, handleLink[0]);
+
 	// console.log('Téléchargement du fichier blob...');
-	await page.evaluate(async (data, artist, title) => {
-		const link = document.createElement('a');
-		link.href = data;
-		link.download = `${artist} - ${title}.mp3`;
-		document.body.appendChild(link);
-		link.click();
-		await new Promise(resolve => setTimeout(resolve, 1000));
-		document.body.removeChild(link);
+	await page.evaluate(async (songLink, artist, title) => {
+		const linkBlob = document.createElement('a');
+		linkBlob.href = songLink;
+		linkBlob.download = `${artist} - ${title}.mp3`;
+		document.body.appendChild(linkBlob);
+		linkBlob.click();
+		document.body.removeChild(linkBlob);
 	}, songLink, artist, title);
 
-	const downloadPath = `${downloadFolder}/${artist} - ${title}.mp3`; // Ajustez le chemin en fonction de votre configuration
+	const downloadPath = path.join(downloadFolder, `${artist} - ${title}.mp3`);
+
+	// console.log('Fichier blob téléchargé');
 	while (true) {
 		try {
 			await fs.promises.access(downloadPath, fs.constants.R_OK);
@@ -65,7 +66,6 @@ async function downloadSong(link) {
 			await new Promise(resolve => setTimeout(resolve, 250));
 		}
 	}
-	// console.log('Fichier blob téléchargé.');
 
 	// console.log('Fermeture du navigateur...');
 	await browser.close();
