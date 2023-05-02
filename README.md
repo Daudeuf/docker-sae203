@@ -7,7 +7,7 @@ Image Docker pour un site internet ressemblant à Spotify permettant de chercher
 Pour compiler l'image Docker, exécutez la commande suivante :
 
 ```
-docker build -t nom-de-l-image .
+docker build --platform linux/amd64 -t nom-de-l-image .
 ```
 
 Assurez-vous de remplacer `nom-de-l-image` par le nom que vous souhaitez donner à votre image.
