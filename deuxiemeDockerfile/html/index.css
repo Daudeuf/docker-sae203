@@ -6,6 +6,15 @@ body{
 
 nav{
  background-color: #0F0F0F;
+ display:inline-flex;
+  justify-content:space-between;
+  width:100%;
+  align-items: center;
+}
+
+nav * {
+  vertical-align: middle;
+  line-height: normal;
 }
 
 h1{
