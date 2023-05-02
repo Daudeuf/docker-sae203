@@ -29,4 +29,5 @@ document.onkeydown=function(evt){
         })
         .catch(error => console.error(error));
     }
+}
 
