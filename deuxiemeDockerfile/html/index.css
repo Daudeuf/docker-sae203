@@ -4,7 +4,6 @@
 body{
 	background-color: #252322;
 	font-family: 'Roboto', sans-serif;
-	height:2000px;
 	margin: 0 0 0 0;
 }
 
@@ -39,13 +38,12 @@ h1{
   width: 100%;
 }
 
-.recommendation{
+.boxSpecial {
 	border: 1px;
 	border-radius: 6px;
 	border-color: black;
 	border-style: solid;
 	background-color: rgb(25, 25, 25);
-	width: 1000px;
 	padding-left: 10px;
 	margin-top: 25px;
 	margin-bottom: 25px;
@@ -53,18 +51,8 @@ h1{
 	margin-left: 12px;
 }
 
-.attente{
-	border: 1px;
-	border-radius: 6px;
-	border-color: black;
-	border-style: solid;
-	background-color: rgb(25, 25, 25);
+.attente {
 	width: 350px;
-	padding-left: 10px;
-	margin-top: 25px;
-	margin-bottom: 25px;
-	margin-right: 12px;
-	margin-left: 12px;
 }
 
 .block{
@@ -77,7 +65,7 @@ h1{
 	box-shadow: 2px 2px 2px #2463EB;
 	padding-left: 10px;
 	padding-top: 10px;
-	margin-top: 25px;
+	margin-top: 15px;
 	margin-bottom: 25px;
 	margin-right: 12px;
 	margin-left: 12px;
@@ -87,7 +75,7 @@ h1{
 	color: #2463EB;
 	font-weight: bold;
 	font-size: 20px;
-	margin-top: 0px;
+	margin-top: 5px;
 }
 
 .songTitle{
@@ -100,7 +88,7 @@ h1{
 	color: grey;
 }
 
-input{
+#text-input{
 	width:220px;
 	height:40px;
 	border-radius:30Px;
@@ -142,10 +130,15 @@ a {
 	background: black;
 	box-sizing: border-box;
 	margin:0;
+	border: 1px;
+	border-radius: 15px 15px 0px 0px;
+	border-color: rgb(25, 25, 25);
+	border-style: solid;
 }
 
 .info {
 	padding: 16px 30px;
+	display: inline-block;
 }
 
 .controls {
@@ -189,17 +182,27 @@ a {
 #volume_btn:hover, #shuffle_btn:hover, #playlist_btn:hover {
 	fill: #2463EB;
 }
-.progressbar_slide {
+
+#progressBar {
+	-webkit-appearance: none;
+	appearance: none;
 	width: 100%;
-	background: #A0204C;
 	height: 6px;
+	background: linear-gradient(to right, #2463EB 0%, #A0204C 0%);
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
 }
-.progressbar_range {
-	width: 0;
-	background: #2463EB;
-	height: 6px;
+
+#progressBar:hover {
+	opacity: 1;
 }
 
 img {
 	border-radius: 10px;
+}
+
+#songInfo{
+	color: white;
 }

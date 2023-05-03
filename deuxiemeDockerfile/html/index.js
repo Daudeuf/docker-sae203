@@ -3,78 +3,90 @@ const textInput = document.querySelector('#text-input');
 const songInfo = document.querySelector('#songInfo');
 const audio = document.querySelector('#audio');
 const plays_btn = document.querySelector('#plays_btn');
+const progressBar = document.getElementById('progressBar');
 
 document.getElementById("plays_btn").addEventListener("click", function() {
-    var audio = document.getElementsByTagName("audio")[0];
-    var playBtn = document.getElementById("play_btn");
-    var pauseBtn = document.getElementById("pause_btn");
+	var audio = document.getElementsByTagName("audio")[0];
+	var playBtn = document.getElementById("play_btn");
+	var pauseBtn = document.getElementById("pause_btn");
 
-    if (!audio.paused) {
-        audio.pause();
-        playBtn.style.display = "block";
-        pauseBtn.style.display = "none";
-    } else {
-        audio.play();
-        playBtn.style.display = "none";
-        pauseBtn.style.display = "block";
-    }
+	if (!audio.paused) {
+		audio.pause();
+		playBtn.style.display = "block";
+		pauseBtn.style.display = "none";
+	} else {
+		audio.play();
+		playBtn.style.display = "none";
+		pauseBtn.style.display = "block";
+	}
 });
 
-// function for timeline
+function updateProgressbarColor(value)
+{
+	const colorLeft = '#2463EB';
+	const colorRight = '#A0204C';
+	progressBar.style.background = `linear-gradient(to right, ${colorLeft} ${value/100}%, ${colorRight} ${value/100}%)`;
+}
+
+
+// count function for time
 
 audio.addEventListener("timeupdate", function() {
-    var currentTime = audio.currentTime,
-        duration = audio.duration,
-        currentTimeMs = audio.currentTime * 1000;
-    var progressbarRange = document.querySelector('.progressbar_range');
-    
-    progressbarRange.style.width = (currentTime + 0.25) / duration * 100 + '%';
+	var time = document.getElementById('time'),
+		currentTime = parseInt(audio.currentTime),
+		s, m;
+
+	s = currentTime % 60;
+	m = Math.floor(currentTime / 60);
+
+	s = s < 10 ? "0" + s : s;
+	m = m < 10 ? "0" + m : m;
+
+	time.textContent = m + ":" + s;
+
+	var val = (audio.currentTime / audio.duration) * 10000;
+
+	if (!isNaN(val))
+	{
+		progressBar.value = val;
+		updateProgressbarColor(val);
+	}
 });
 
-// count function for timeleft
+progressBar.addEventListener("change", () => {
+	if (!isNaN(audio.duration)) audio.currentTime = (progressBar.value / 10000) * audio.duration;
+});
 
-audio.addEventListener("timeupdate", function() {
-    var timeleft = document.getElementById('timeleft'),
-        duration = parseInt(audio.duration),
-        currentTime = parseInt(audio.currentTime),
-        timeLeft = duration - currentTime,
-        s, m;
-    
-    s = timeLeft % 60;
-    m = Math.floor(timeLeft / 60) % 60;
-    
-    s = s < 10 ? "0" + s : s;
-    m = m < 10 ? "0" + m : m;
-    
-    timeleft.textContent = "-" + m + ":" + s;
+progressBar.addEventListener("input", () => {
+	updateProgressbarColor(progressBar.value);
 });
 
 document.onkeydown=function(evt){
-    var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
-    if(keyCode == 13)
-    {
-        console.log(`Termes recherchés : ${textInput.value}`);
-        event.preventDefault(); // empêcher l'envoi du formulaire
-        const text = textInput.value;
-        textInput.value = '';
+	var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
+	if(keyCode == 13)
+	{
+		console.log(`Termes recherchés : ${textInput.value}`);
+		event.preventDefault(); // empêcher l'envoi du formulaire
+		const text = textInput.value;
+		textInput.value = '';
 
-        fetch('http://localhost:3000/submit',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ text })
-        }).then(response => response.text()).then(data =>
-        {
-            console.log(`Fichier : ${data}.mp3`);
+		fetch('http://localhost:3000/submit',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ text })
+		}).then(response => response.text()).then(data =>
+		{
+			console.log(`Fichier : ${data}.mp3`);
 
-            songInfo.innerHTML = `${data}`;
-            audio.innerHTML = `<source src="tracks/${data}.mp3" type="audio/mpeg">`;
+			songInfo.innerHTML = `${data}`;
+			audio.innerHTML = `<source src="tracks/${data}.mp3" type="audio/mpeg">`;
 
-            audio.load();
-            audio.play();
-        }).catch(error => console.error(`Erreur : ${error}`));
-    }
+			audio.load();
+			audio.play();
+		}).catch(error => console.error(`Erreur : ${error}`));
+	}
 }
 
