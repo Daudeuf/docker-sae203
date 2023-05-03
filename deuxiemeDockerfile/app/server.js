@@ -13,20 +13,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/submit', async (req, res) => {
+	// Récupération des termes à rechercher
 	const text = req.body.text;
-
 	console.log(`Les termes recherchés sont : ${text}`);
 
 	// Utilisez le module pour trouver un titre Spotify
-	const title = await track_finder(text);
-	console.log('Titre Spotify trouvé:', title);
+	const lien = await track_finder(text);
+	console.log('Titre Spotify trouvé:', lien);
 
 	// Utilisez le module pour télécharger le son Spotify
-	const name = await track_downloader(title);
+	const name = await track_downloader(lien);
+	console.log('Titre téléchargé');
 
 	res.send(name);
-
-	console.log('Attente ...');
 });
 
 app.listen(3000, () => {
