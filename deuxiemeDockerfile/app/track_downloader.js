@@ -26,13 +26,13 @@ async function downloadSong(link) {
 	await page.click('xpath//html/body/div/div/button');
 
 	// console.log('Attente de l\'élément...');
-	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
+	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button', {timeout: 100_000});
 	
 	// console.log('Clic sur le deuxième bouton...');
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
 
 	// console.log('Attente de l\'élément à scraper...');
-	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]');
+	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]', {timeout: 100_000});
 
 	// console.log('Récupération des données...');
 	const handleTitle = await page.$x('/html/body/div[1]/div/div[2]/p[1]');
