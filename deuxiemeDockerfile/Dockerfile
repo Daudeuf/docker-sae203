@@ -54,7 +54,6 @@ RUN apt clean
 RUN groupadd -r nodeuser && useradd -rm -g nodeuser -G audio,video nodeuser
 COPY ./app  /home/nodeuser/app/
 ADD track_server.sh  /home/nodeuser/track_server.sh
-RUN mkdir /var/www/html/tracks
 RUN chown -R nodeuser:nodeuser /home/nodeuser && \
     chmod -R 777 /home/nodeuser && \
     chown -R nodeuser:nodeuser /var/www && \
