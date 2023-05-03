@@ -5,6 +5,7 @@ body{
   background-color: #252322;
   font-family: 'Roboto', sans-serif;
   height:2000px;
+  margin: 0 0 0 0;
 }
 
 nav{
@@ -26,6 +27,11 @@ h1{
   padding-left: 10px;
 }
 
+.box{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .block{
   border: 1px;
   border-radius: 6px;
@@ -37,6 +43,8 @@ h1{
   padding-left: 10px;
   margin-top: 25px;
   margin-bottom: 25px;
+  margin-right: 12px;
+  margin-left: 12px;
 }
 
 .blockTitle{
