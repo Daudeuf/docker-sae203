@@ -16,22 +16,40 @@ async function downloadSong(link) {
 		downloadPath: downloadFolder,
 	});
 	
-	// console.log('Navigation vers la page...');
 	await page.goto('https://spotifydown.com/fr');
+	
+	// TEST
+	const handle1 = await page.$x('/html/body/div/div/div[1]/input');
+	const res1 = await page.evaluate(el => el.innerHTML, handle1[0]);
+	console.log(await res1.jsonValue());
 
-	// console.log('Remplissage du champ de texte...');
+	const handle2 = await page.$x('/html/body/div/div/button');
+	const res2 = await page.evaluate(el => el.innerHTML, handle2[0]);
+	console.log(await res2.jsonValue());
+	// TEST
+
 	await page.type('xpath//html/body/div/div/div[1]/input', link);
-
-	// console.log('Clic sur le bouton...');
 	await page.click('xpath//html/body/div/div/button');
+	
+	await new Promise(resolve => setTimeout(resolve, 15_000));
+	
+	// TEST
+	const handle1 = await page.$x('/html/body/div/div/div[1]/input');
+	const res1 = await page.evaluate(el => el.innerHTML, handle1[0]);
+	console.log(await res1.jsonValue());
 
-	// console.log('Attente de l\'élément...');
+	const handle2 = await page.$x('/html/body/div/div/button');
+	const res2 = await page.evaluate(el => el.innerHTML, handle2[0]);
+	console.log(await res2.jsonValue());
+	// TEST
+
+	// Attente du bouton pour avoir le lien
 	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button', {timeout: 100_000});
 	
-	// console.log('Clic sur le deuxième bouton...');
+	// Click sur le bouton pour avoir le lien
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
 
-	// console.log('Attente de l\'élément à scraper...');
+	// Attente du lien
 	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]', {timeout: 100_000});
 
 	// console.log('Récupération des données...');
