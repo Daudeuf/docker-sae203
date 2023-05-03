@@ -4,6 +4,7 @@ const songInfo = document.querySelector('#songInfo');
 const audio = document.querySelector('#audio');
 const plays_btn = document.querySelector('#plays_btn');
 const progressBar = document.getElementById('progressBar');
+let isDragging = false;
 
 document.getElementById("plays_btn").addEventListener("click", function() {
 	var audio = document.getElementsByTagName("audio")[0];
@@ -34,19 +35,26 @@ function updateProgressbarColor(value)
 audio.addEventListener("timeupdate", function() {
 	var time = document.getElementById('time'),
 		currentTime = parseInt(audio.currentTime),
-		s, m;
+		durationTime = parseInt(audio.duration),
+		s, m, s2, m2;
 
 	s = currentTime % 60;
 	m = Math.floor(currentTime / 60);
 
+	s2 = durationTime % 60;
+	m2 = Math.floor(durationTime / 60);
+
 	s = s < 10 ? "0" + s : s;
 	m = m < 10 ? "0" + m : m;
 
-	time.textContent = m + ":" + s;
+	s2 = s2 < 10 ? "0" + s2 : s2;
+	m2 = m2 < 10 ? "0" + m2 : m2;
+
+	time.textContent = m + ":" + s + " / " + m2 + ":" + s2;
 
 	var val = (audio.currentTime / audio.duration) * 10000;
 
-	if (!isNaN(val))
+	if (!isNaN(val) && !isDragging)
 	{
 		progressBar.value = val;
 		updateProgressbarColor(val);
@@ -59,6 +67,14 @@ progressBar.addEventListener("change", () => {
 
 progressBar.addEventListener("input", () => {
 	updateProgressbarColor(progressBar.value);
+});
+
+progressBar.addEventListener('mousedown', () => {
+	isDragging = true;
+});
+
+progressBar.addEventListener('mouseup', () => {
+	isDragging = false;
 });
 
 document.onkeydown=function(evt){
