@@ -142,7 +142,6 @@ a {
 
 .controls {
   display: flex;
-  height: 100px;
   background: black;
   margin-top: -1px;
   padding: 20px;
