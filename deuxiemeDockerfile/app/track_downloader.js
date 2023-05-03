@@ -17,38 +17,19 @@ async function downloadSong(link) {
 	});
 	
 	await page.goto('https://spotifydown.com/fr');
-	
-	// TEST 1
-	const handle1 = await page.$x('/html/body/div/div/div[1]/input');
-	const res1 = await page.evaluate(el => el.innerHTML, handle1[0]);
-	console.log(res1);
-
-	const handle2 = await page.$x('/html/body/div/div/button');
-	const res2 = await page.evaluate(el => el.innerHTML, handle2[0]);
-	console.log(res2);
-	// TEST 1
 
 	await page.type('xpath//html/body/div/div/div[1]/input', link);
 	
+	await new Promise(resolve => setTimeout(resolve, 10_000));
+	
 	// Attente du bouton pour avoir le lien
-	await page.waitForSelector('xpath//html/body/div/div/button', {timeout: 100_000});
+	await page.waitForXPath('//html/body/div/div/button', {timeout: 100_000})
 	
 	await page.click('xpath//html/body/div/div/button');
 	
-	await new Promise(resolve => setTimeout(resolve, 15_000));
+	await new Promise(resolve => setTimeout(resolve, 10_000));
 	
-	// TEST 2
-	const handle3 = await page.$x('/html/body/div/div/div[1]/input');
-	const res3 = await page.evaluate(el => el.innerHTML, handle3[0]);
-	console.log(res3);
-
-	const handle4 = await page.$x('/html/body/div/div/button');
-	const res4 = await page.evaluate(el => el.innerHTML, handle4[0]);
-	console.log(res4);
-	// TEST 2
-
-	// Attente du bouton pour avoir le lien
-	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button', {timeout: 100_000});
+	await page.waitForXPath('//html/body/div/div/div[2]/div[1]/div/div[2]/button', {timeout: 100_000})
 	
 	// Click sur le bouton pour avoir le lien
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
