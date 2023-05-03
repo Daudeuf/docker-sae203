@@ -67,7 +67,8 @@ async function downloadSong(link) {
 	let songLink = await page.evaluate(el => el.href, handleLink[0]);
 
 	// Téléchargement du fichier blob ...
-	await page.evaluate(async (songLink, artist, title) => {
+	await page.evaluate(async (songLink, artist, title) =>
+	{
 		const linkBlob = document.createElement('a');
 		linkBlob.href = songLink;
 		linkBlob.download = `${artist} - ${title}.mp3`;
@@ -79,11 +80,15 @@ async function downloadSong(link) {
 	const downloadPath = `${downloadFolder}/${artist} - ${title}.mp3`;
 
 	// Fichier blob téléchargé
-	while (true) {
-		try {
+	while (true)
+	{
+		try
+		{
 			await fs.promises.access(downloadPath, fs.constants.R_OK);
 			break;
-		} catch (error) {
+		}
+		catch (error)
+		{
 			// Le fichier n'est pas encore disponible, attendez un peu et réessayez
 			await new Promise(resolve => setTimeout(resolve, 250));
 		}
