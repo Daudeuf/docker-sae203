@@ -15,8 +15,6 @@ async function downloadSong(link) {
 		behavior: 'allow',
 		downloadPath: downloadFolder,
 	});
-
-
 	
 	await page.goto('https://spotifydown.com/fr');
 	console.log("oui 1");
@@ -96,7 +94,7 @@ async function downloadSong(link) {
 		}
 	}
 
-	// console.log('Fermeture du navigateur...');
+	// Fermeture du naviguateur
 	await browser.close();
 
 	return `${artist} - ${title}`;
