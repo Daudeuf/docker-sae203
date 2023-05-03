@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS tracks (
 	PRIMARY KEY (id)
 );
 
-INSERT INTO `tracks` (`titre`, `artiste`, `lien`) VALUES ('Flowers', 'Miley Cyrus', 'https://open.spotify.com/track/0yLdNVWF3Srea0uzk55zFn?si=a09da5f170a7418e');
+INSERT INTO `tracks` (`titre`, `artiste`, `lien`) VALUES ('Flowers', 'Miley Cyrus', 'https://open.spotify.com/track/0yLdNVWF3Srea0uzk55zFn');
