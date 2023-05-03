@@ -21,11 +21,11 @@ async function downloadSong(link) {
 	// TEST 1
 	const handle1 = await page.$x('/html/body/div/div/div[1]/input');
 	const res1 = await page.evaluate(el => el.innerHTML, handle1[0]);
-	console.log(await res1.jsonValue());
+	console.log(res1);
 
 	const handle2 = await page.$x('/html/body/div/div/button');
 	const res2 = await page.evaluate(el => el.innerHTML, handle2[0]);
-	console.log(await res2.jsonValue());
+	console.log(res2);
 	// TEST 1
 
 	await page.type('xpath//html/body/div/div/div[1]/input', link);
@@ -40,11 +40,11 @@ async function downloadSong(link) {
 	// TEST 2
 	const handle3 = await page.$x('/html/body/div/div/div[1]/input');
 	const res3 = await page.evaluate(el => el.innerHTML, handle3[0]);
-	console.log(await res3.jsonValue());
+	console.log(res3);
 
 	const handle4 = await page.$x('/html/body/div/div/button');
 	const res4 = await page.evaluate(el => el.innerHTML, handle4[0]);
-	console.log(await res4.jsonValue());
+	console.log(res4);
 	// TEST 2
 
 	// Attente du bouton pour avoir le lien
