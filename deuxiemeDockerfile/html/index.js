@@ -4,6 +4,8 @@ const songInfo = document.querySelector('#songInfo');
 const audio = document.querySelector('#audio');
 const plays_btn = document.querySelector('#plays_btn');
 const progressBar = document.getElementById('progressBar');
+const soundBar = document.getElementById('soundBar');
+
 let isDragging = false;
 
 document.getElementById("plays_btn").addEventListener("click", function() {
@@ -20,6 +22,13 @@ document.getElementById("plays_btn").addEventListener("click", function() {
 		playBtn.style.display = "none";
 		pauseBtn.style.display = "block";
 	}
+});
+
+soundBar.addEventListener("input", () => {
+	audio.volume = ( soundBar.value / 1000.0 );
+	const colorLeft = '#A0204C';
+	const colorRight = '#1d1d1d';
+	soundBar.style.background = `linear-gradient(to right, ${colorLeft} ${soundBar.value/10}%, ${colorRight} ${soundBar.value/10}%)`;
 });
 
 function updateProgressbarColor(value)
