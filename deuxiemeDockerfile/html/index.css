@@ -23,6 +23,36 @@ nav * {
 h1{
   color:white;
   font-family: 'Bebas Neue', cursive;
+  padding-left: 10px;
+}
+
+.block{
+  border: 1px;
+  border-radius: 6px;
+  border-color: black;
+  border-style: solid;
+  background-color: black;
+  width: 200px;
+  box-shadow: 2px 2px 2px #2463EB;
+  padding-left: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.blockTitle{
+  color: #2463EB;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.songTitle{
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.artist{
+  color: grey;
 }
 
 input{
@@ -49,7 +79,7 @@ p {
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
-  color: grey;
+  color: white;
 }
 a {
   text-decoration: none;
@@ -65,7 +95,7 @@ a {
   justify-content: space-between;
   transition: all 0.2s;
   width: 100%;
-  background: rgb(72, 72, 72);
+  background: black;
   box-sizing: border-box;
   height:200px;
   margin:0;
@@ -93,7 +123,7 @@ a {
 .controls {
   display: flex;
   height: 100px;
-  background: rgb(72, 72, 72);
+  background: black;
   margin-top: -1px;
   padding: 20px;
   transition: all 0.2s;
@@ -105,7 +135,7 @@ a {
 }
 .controls_player {
   flex: 1;
-  fill: #2463EB;
+  fill: #A0204C;
   display: flex;
   justify-content: space-around;
 }
@@ -117,6 +147,7 @@ a {
 }
 #plays_btn, #prev_btn, #next_btn {
   cursor: pointer;
+  fill: white;
   width: 26px;
   max-width: 18px;
   transition: all 0.2s;
@@ -143,6 +174,6 @@ a {
 }
 .progressbar_range {
   width: 0;
-  background: black;
+  background: white;
   height: 6px;
 }
