@@ -55,6 +55,7 @@ h1{
   width: 200px;
   box-shadow: 2px 2px 2px #2463EB;
   padding-left: 10px;
+  padding-top: 10px;
   margin-top: 25px;
   margin-bottom: 25px;
   margin-right: 12px;
@@ -65,6 +66,7 @@ h1{
   color: #2463EB;
   font-weight: bold;
   font-size: 20px;
+  margin-top: 0px;
 }
 
 .songTitle{
