@@ -19,32 +19,42 @@ async function downloadSong(link) {
 	
 	// Affichage de la page
 	await page.goto('https://spotifydown.com/fr');
+	console.log("[DEBUG] -> 1");
 
 	await new Promise(resolve => setTimeout(resolve, 3_000));
+	console.log("[DEBUG] -> 2");
 
 	// Champ de saisie
 	await page.waitForXPath('//html/body/div/div/div[1]/input', {timeout: 15_000})
 	await page.type('xpath//html/body/div/div/div[1]/input', link, {delay: 75});
+	console.log("[DEBUG] -> 3");
 	
 	await new Promise(resolve => setTimeout(resolve, 3_000));
+	console.log("[DEBUG] -> 4");
 	
 	// Premier bouton
 	await page.waitForXPath('//html/body/div/div/button', {timeout: 15_000})
 	await page.click('xpath//html/body/div/div/button');
+	console.log("[DEBUG] -> 5");
 
 	await new Promise(resolve => setTimeout(resolve, 3_000));
+	console.log("[DEBUG] -> 6");
 
 	// Deuxième bouton
 	await page.waitForXPath('//html/body/div/div/div[2]/div[1]/div/div[2]/button', {timeout: 15_000})
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
+	console.log("[DEBUG] -> 7");
 
 	const elements = await page.$x('/html/body/div/div/div[2]/div[1]/div/div[2]/button');
 	await elements[0].click();
+	console.log("[DEBUG] -> 8");
 
 	await new Promise(resolve => setTimeout(resolve, 3_000));
+	console.log("[DEBUG] -> 9");
 
 	// Attente lien et différents résultats
 	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]', {timeout: 15_000});
+	console.log("[DEBUG] -> 10");
 
 	// Récupération des données ...
 	const handleTitle = await page.$x('/html/body/div[1]/div/div[2]/p[1]');
