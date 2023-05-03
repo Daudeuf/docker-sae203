@@ -65,7 +65,7 @@ a {
   justify-content: space-between;
   transition: all 0.2s;
   width: 100%;
-  background: white;
+  background: rgb(72, 72, 72);
   box-sizing: border-box;
   height:200px;
   margin:0;
@@ -93,7 +93,7 @@ a {
 .controls {
   display: flex;
   height: 100px;
-  background: white;
+  background: rgb(72, 72, 72);
   margin-top: -1px;
   padding: 20px;
   transition: all 0.2s;
