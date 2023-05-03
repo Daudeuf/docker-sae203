@@ -15,37 +15,63 @@ async function downloadSong(link) {
 		behavior: 'allow',
 		downloadPath: downloadFolder,
 	});
+
+
 	
 	await page.goto('https://spotifydown.com/fr');
+	console.log("oui 1");
 
-	await page.type('xpath//html/body/div/div/div[1]/input', link);
+	await new Promise(resolve => setTimeout(resolve, 2000));
+
+	await page.type('xpath//html/body/div/div/div[1]/input', link, {delay: 50});
+	console.log("oui 2");
 	
-	await new Promise(resolve => setTimeout(resolve, 10_000));
+
+	await new Promise(resolve => setTimeout(resolve, 2000));
+	
 	
 	// Attente du bouton pour avoir le lien
 	await page.waitForXPath('//html/body/div/div/button', {timeout: 100_000})
+	console.log("oui 3");
+
+
 	
 	await page.click('xpath//html/body/div/div/button');
+	console.log("oui 4");
+
+	const elements = await page.$x('/html/body/div/div/button')
+	await elements[0].click() 
+
+	console.log("gg chacal");
 	
 	await new Promise(resolve => setTimeout(resolve, 10_000));
 	
 	await page.waitForXPath('//html/body/div/div/div[2]/div[1]/div/div[2]/button', {timeout: 100_000})
 	
+	console.log("oui 5");
+	
 	// Click sur le bouton pour avoir le lien
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
+	console.log("oui 6")
 
 	// Attente du lien
 	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]', {timeout: 100_000});
+	console.log("oui 7")
 
 	// console.log('Récupération des données...');
 	const handleTitle = await page.$x('/html/body/div[1]/div/div[2]/p[1]');
 	let title = await page.evaluate(el => el.innerText, handleTitle[0]);
+	console.log("oui 8")
 
 	const handleArtist = await page.$x('/html/body/div[1]/div/div[2]/p[2]');
 	let artist = await page.evaluate(el => el.innerText, handleArtist[0]);
 
+	console.log("oui 9")
+
 	const handleLink = await page.$x('/html/body/div/div/div[2]/div[1]/a[1]');
 	let songLink = await page.evaluate(el => el.href, handleLink[0]);
+
+	console.log("oui 10")
 
 	// console.log('Téléchargement du fichier blob...');
 	await page.evaluate(async (songLink, artist, title) => {
