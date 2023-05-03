@@ -97,7 +97,7 @@ async function downloadSong(link) {
 	// Fermeture du naviguateur
 	await browser.close();
 
-	return `${artist} - ${title}`;
+	return { artist, title };
 }
 
 module.exports = downloadSong;
