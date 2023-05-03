@@ -32,13 +32,8 @@ async function downloadSong(link) {
 	await page.waitForXPath('//html/body/div/div/button', {timeout: 100_000})
 	console.log("oui 3");
 
-
-	
 	await page.click('xpath//html/body/div/div/button');
 	console.log("oui 4");
-
-	const elements = await page.$x('/html/body/div/div/button');
-	await elements[0].click();
 
 	console.log("gg chacal");
 	
