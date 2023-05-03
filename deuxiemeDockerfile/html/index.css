@@ -32,6 +32,20 @@ h1{
   flex-wrap: wrap;
 }
 
+.recommendation{
+  border: 1px;
+  border-radius: 6px;
+  border-color: black;
+  border-style: solid;
+  background-color: rgb(25, 25, 25);
+  width: 1000px;
+  padding-left: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
 .block{
   border: 1px;
   border-radius: 6px;
@@ -64,9 +78,10 @@ h1{
 }
 
 input{
-  width:180px;
+  width:220px;
   height:40px;
   border-radius:30Px;
+  padding-left: 20px;
 }
 
 audio {
