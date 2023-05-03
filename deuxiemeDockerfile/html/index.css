@@ -188,11 +188,11 @@ a {
 }
 .progressbar_slide {
   width: 100%;
-  background: #2463EB;
+  background: #A0204C;
   height: 6px;
 }
 .progressbar_range {
   width: 0;
-  background: white;
+  background: #2463EB;
   height: 6px;
 }
