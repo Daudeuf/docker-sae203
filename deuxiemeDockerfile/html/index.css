@@ -32,6 +32,13 @@ h1{
 	flex-wrap: wrap;
 }
 
+.boxTop{
+	display: inline-flex;
+	flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .recommendation{
 	border: 1px;
 	border-radius: 6px;
