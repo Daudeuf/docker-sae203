@@ -37,8 +37,8 @@ async function downloadSong(link) {
 	await page.click('xpath//html/body/div/div/button');
 	console.log("oui 4");
 
-	const elements = await page.$x('/html/body/div/div/button')
-	await elements[0].click() 
+	const elements = await page.$x('/html/body/div/div/button');
+	await elements[0].click();
 
 	console.log("gg chacal");
 	
@@ -51,6 +51,11 @@ async function downloadSong(link) {
 	// Click sur le bouton pour avoir le lien
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
 	console.log("oui 6")
+
+	const elements = await page.$x('/html/body/div/div/div[2]/div[1]/div/div[2]/button');
+	await elements[0].click();
+
+	console.log("gg chacal 2");
 
 	await new Promise(resolve => setTimeout(resolve, 2000));
 
