@@ -52,6 +52,8 @@ async function downloadSong(link) {
 	await page.click('xpath//html/body/div/div/div[2]/div[1]/div/div[2]/button');
 	console.log("oui 6")
 
+	await new Promise(resolve => setTimeout(resolve, 2000));
+
 	// Attente du lien
 	await page.waitForSelector('xpath//html/body/div/div/div[2]/div[1]/a[1]', {timeout: 100_000});
 	console.log("oui 7")
