@@ -45,5 +45,3 @@ Cette commande lance un conteneur Docker à partir de l'image `<nom-de-votre-ima
 Lors de l'utilisation de cette application, il est possible que le chargement de la page web soit très long en raison de la connexion nécessaire pour télécharger les titres de chansons. De plus, il est possible que le logiciel soit instable sur certains systèmes, en particulier sur les machines Windows et Mac.
 
 Il est également important de noter que lors de la mise en place de Docker pendant la SAE, nous avons rencontré des problèmes importants qui ont empêché l'utilisation de Docker à son potentiel maximum.
-
-N'hésitez pas à ajouter des informations supplémentaires sur l'utilisation de votre application si nécessaire.
