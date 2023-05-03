@@ -11,7 +11,7 @@ En plus de cela, cette image Docker inclut un serveur web pour accéder à une p
 2. Clonez le repository de l'application à partir de GitHub :
 
 ```
-git clone https://github.com/votre-nom/utilisation-docker-sae203.git
+git clone https://github.com/Daudeuf/docker-sae203.git
 ```
 
 3. Accédez au répertoire de l'application :
