@@ -1,4 +1,4 @@
-# docker-sae203
+# Docker SAÉ 2.03
 
 Ceci est une image Docker qui permet d'héberger une application qui permet de chercher des titres de chansons à partir d'une suite de mots. Cette application utilise Node.js et Puppeteer pour naviguer sur un site web et trouver les titres de chansons pertinents. Elle inclut également l'environnement graphique Xvfb pour permettre l'utilisation de Puppeteer sans affichage graphique. Une fois le titre de la chanson trouvé, l'application télécharge le fichier audio et le rend disponible à l'utilisateur.
 
