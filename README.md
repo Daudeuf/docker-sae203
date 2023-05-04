@@ -10,19 +10,19 @@ En plus de cela, cette image Docker inclut un serveur web pour accéder à une p
 
 2. Clonez le repository de l'application à partir de GitHub :
 
-```
+```shell
 git clone https://github.com/Daudeuf/docker-sae203.git
 ```
 
 3. Accédez au répertoire de l'application :
 
-```
+```shell
 cd utilisation-docker-sae203
 ```
 
 4. Compilez l'image Docker à l'aide de la commande suivante :
 
-```
+```shell
 docker build --platform linux/amd64 -t <nom-de-votre-image> .
 ```
 
@@ -32,7 +32,7 @@ Assurez-vous de remplacer `<nom-de-votre-image>` par le nom que vous souhaitez d
 
 Pour lancer un conteneur à partir de votre image Docker, exécutez la commande suivante :
 
-```
+```shell
 docker run --rm --cap-add=SYS_ADMIN -p 80:80 -p 3000:3000 -d <nom-de-votre-image>
 ```
 
