@@ -22,33 +22,46 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/submit', async (req, res) => {
-	// Récupération des termes à rechercher
-	const text = req.body.text;
-	console.log(`Les termes recherchés sont : ${text}`);
-
-	// Utilisez le module pour trouver un titre Spotify
-	const lien = await track_finder(text);
-	console.log('Titre Spotify trouvé:', lien);
-
-	// Vérification de la présence du titre dans la base de données
-	if (await isInDatabase(lien))
+	if (req.body.submit_code == "download")
 	{
-		console.log("Titre déjà existant");
+		// Récupération des termes à rechercher
+		const text = req.body.text;
+		console.log(`Les termes recherchés sont : ${text}`);
+
+		// Utilisez le module pour trouver un titre Spotify
+		const lien = await track_finder(text);
+		console.log('Titre Spotify trouvé:', lien);
+
+		// Vérification de la présence du titre dans la base de données
+		if (await isInDatabase(lien))
+		{
+			console.log("Titre déjà existant");
+		}
+		else
+		{
+			console.log("Titre non existant");
+
+			// Utilisez le module pour télécharger le son Spotify
+			const result = await track_downloader(lien);
+			console.log('Titre téléchargé');
+
+			await addSong(lien, result.title, result.artist);
+		}
+
+		var data = await getData(lien);
+
+		res.send(`${data.artiste} - ${data.titre}`);
 	}
-	else
+	else // donc get_all_song
 	{
-		console.log("Titre non existant");
-
-		// Utilisez le module pour télécharger le son Spotify
-		const result = await track_downloader(lien);
-		console.log('Titre téléchargé');
-
-		await addSong(lien, result.title, result.artist);
+		try {
+			const rows = await databaseQuery(`SELECT * FROM tracks`);
+			res.send(rows);
+		} catch (error) {
+			console.error('[5] Erreur lors de la vérification de la présence du lien dans la base de données :', error);
+			res.send({});
+		}
 	}
-
-	var data = await getData(lien);
-
-	res.send(`${data.artiste} - ${data.titre}`);
 });
 
 app.listen(3000, () => {
@@ -91,7 +104,7 @@ async function databaseQuery(query)
 		conn = await pool.getConnection();
 		return await conn.query(query);
 	} catch (error) {
-		console.error(`Erreur lors de l'insertion de la ligne dans la base de données :\n\n${query}\n\nErreur :`, error);
+		console.error(`[4] Erreur lors de l'insertion de la ligne dans la base de données :\n\n${query}\n\nErreur :`, error);
 	} finally {
 		if (conn) conn.release();
 	}

@@ -5,6 +5,9 @@ const audio = document.querySelector('#audio');
 const plays_btn = document.querySelector('#plays_btn');
 const progressBar = document.getElementById('progressBar');
 const soundBar = document.getElementById('soundBar');
+const songBox = document.querySelector('.songBox');
+
+var jsmediatags = window.jsmediatags;
 
 let isDragging = false;
 
@@ -93,6 +96,7 @@ document.onkeydown=function(evt){
 		console.log(`Termes recherchés : ${textInput.value}`);
 		event.preventDefault(); // empêcher l'envoi du formulaire
 		const text = textInput.value;
+		const submit_code = "download";
 		textInput.value = '';
 
 		fetch('http://localhost:3000/submit',
@@ -101,7 +105,7 @@ document.onkeydown=function(evt){
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ text })
+			body: JSON.stringify({ text, submit_code })
 		}).then(response => response.text()).then(data =>
 		{
 			console.log(`Fichier : ${data}.mp3`);
@@ -111,7 +115,84 @@ document.onkeydown=function(evt){
 
 			audio.load();
 			audio.play();
+
+			updateSong();
 		}).catch(error => console.error(`Erreur : ${error}`));
 	}
 }
 
+function updateSong()
+{
+	const submit_code = "get_all_song";
+
+	fetch('http://localhost:3000/submit',
+	{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ submit_code })
+	}).then(response => response.text()).then(jsonString =>
+	{
+		const data = JSON.parse(jsonString);
+
+		songBox.innerHTML = '';
+
+		data.forEach(async function(song) {
+			const imageDataUrl = await getSongImage(`${song.artiste} - ${song.titre}.mp3`);
+			const blockHTML = `
+				<div class="block" data-song-id="${song.id}">
+					<p class="blockTitle">${song.titre} - ${song.artiste}</p>
+					<img src="${imageDataUrl}" alt="${song.titre}-cover" style="width: 160px; height: 140px;">
+					<p class="songTitle">${song.titre}</p><br />
+					<p class="artist">${song.artiste}</p>
+				</div>
+			`;
+
+			songBox.insertAdjacentHTML('beforeend', blockHTML);
+		});
+
+	}).catch(error => console.error(`Erreur : ${error}`));
+}
+
+function getSongImage(filename)
+{
+	return new Promise(async (resolve, reject) => {
+		const mp3Blob = await createMp3Blob(`tracks/${filename}`);
+
+		jsmediatags.read(mp3Blob, {
+			onSuccess: function(tag) {
+				var tags = tag;
+
+				var picture = tags.tags.picture; // create reference to track art
+				var base64String = "";
+				for (var i = 0; i < picture.data.length; i++) {
+					base64String += String.fromCharCode(picture.data[i]);
+				}
+				var imageUri = "data:" + picture.format + ";base64," + window.btoa(base64String);
+
+				resolve(imageUri)
+			}, 
+			onError: function(error) {
+				reject(error)
+			}
+		});
+	});
+}
+
+async function createMp3Blob(filename) {
+	try {
+		const response = await fetch(filename);
+		if (!response.ok) {
+		throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+		const mp3Blob = await response.blob();
+		return mp3Blob;
+	} catch (error) {
+		console.error("Une erreur est survenue lors de la création du blob MP3 :", error);
+		throw error;
+	}
+}
+
+// Appel initial lors de l'ouverture de la page
+updateSong();
