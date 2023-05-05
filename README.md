@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Docker SAÉ 2.03
 
 Ceci est une image Docker qui permet d'héberger une application qui permet de chercher des titres de chansons à partir d'une suite de mots. Cette application utilise Node.js et Puppeteer pour naviguer sur un site web et trouver les titres de chansons pertinents. Elle inclut également l'environnement graphique Xvfb pour permettre l'utilisation de Puppeteer sans affichage graphique. Une fois le titre de la chanson trouvé, l'application télécharge le fichier audio et le rend disponible à l'utilisateur.
@@ -45,3 +46,12 @@ Cette commande lance un conteneur Docker à partir de l'image `<nom-de-votre-ima
 Lors de l'utilisation de cette application, il est possible que le chargement de la page web soit très long en raison de la connexion nécessaire pour télécharger les titres de chansons. De plus, il est possible que le logiciel soit instable sur certains systèmes, en particulier sur les machines Windows et Mac.
 
 Il est également important de noter que lors de la mise en place de Docker pendant la SAE, nous avons rencontré des problèmes importants qui ont empêché l'utilisation de Docker à son potentiel maximum.
+=======
+# docker-sae203
+
+**Build**
+> docker build -t projet-final .
+
+**Run**
+> docker run --rm -p 80:80 projet-final
+>>>>>>> main
