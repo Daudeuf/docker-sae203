@@ -1,4 +1,147 @@
-<body> 
-    <h1> Bonjour ! Je suis CLEMLY !!!!! </h1>
-</body> 
-</html> 
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Black Music</title>
+		<link rel="stylesheet" href="index.css" media="all" type="text/css" />
+	</head>
+
+	<body>
+		<nav>
+			<h1>Black Music</h1>
+			<form>
+				<label for="text-input" ><img style="width:30px;height:30px;color:white;"src="assets/loupe-search-svgrepo-com.svg" alt=""></label>
+				<input type="text" id="text-input" name="text-input" placeholder="Que souhaitez-vous écouter ?">
+			</form>
+		</nav>
+
+		<div class="boxTop">
+			<div class="boxSpecial">
+				<p class="blockTitle"> Recommendations du jour</p>
+				<div class="box">
+					<div class="block">
+						<img src="turndownforwhat-cover.jpeg" alt="turndownforwhat-cover" style="width: 160px; height: 140px;">
+						<p class="songTitle"> Turn Down For What </p><br />
+						<p class="artist"> Dj Snake, Lil Jon </p>
+
+					</div>
+
+					<div class="block">
+						<img src="megustastu-cover.jpeg" alt="megustastu-cover" style="width: 160px; height: 140px;">
+						<p class="songTitle"> Me gustas tu </p><br />
+						<p class="artist"> Manu Chao </p>
+
+					</div>
+
+					<div class="block">
+						<img src="pumpit-cover.jpeg" alt="pumpit-cover" style="width: 160px; height: 140px;">
+						<p class="songTitle"> Pump It </p><br />
+						<p class="artist"> Black Eyed Peas </p>
+
+					</div>
+
+					<div class="block">
+						<img src="partyrockanthem-cover.jpeg" alt="partyrockanthem-cover" style="width: 160px; height: 140px;">
+						<p class="songTitle"> Party Rock Anthem </p><br />
+						<p class="artist"> LMFAO </p>
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="boxSpecial attente">
+				<p class="blockTitle"> File d'Attente</p><br />
+
+				<p class="songTitle"> Bâtiment </p>
+				<p class="artist"> Niska </p><br />
+
+				<p class="songTitle"> Burgers </p>
+				<p class="artist"> Les Jones </p><br />
+
+				<p class="songTitle"> Cette année là </p>
+				<p class="artist"> Claude François </p><br />
+
+				<p class="songTitle"> Thriller </p>
+				<p class="artist"> Michael Jackson </p><br />
+			</div>
+		</div>
+
+
+
+		<div class="box">
+			<div class="block">
+				<p class="blockTitle"> Hit du moment </p>
+				<img src="flowers-cover.jpeg" alt="flowers-cover" style="width: 160px; height: 140px;">
+				<p class="songTitle"> Flowers </p><br />
+				<p class="artist"> Miley Cyrus </p>
+
+			</div>
+
+			<div class="block">
+				<p class="blockTitle"> Radio Ziak </p>
+				<img src="seinen-cover.jpg" alt="seinen-cover" style="width: 160px; height: 140px;">
+				<p class="songTitle"> Seinen </p><br />
+				<p class="artist"> Ziak </p>
+
+			</div>
+		</div>
+
+		<div class="audio-player">
+			<audio id="audio"></audio>
+
+			<div class="info">
+				<h3 id="songInfo">Artiste - Titre</h3>
+				<p id="time">00:00 / 00:00</p>
+
+				<input type="range" id="progressBar" min="0" max="10000" value="0">
+			</div>
+
+			<div class="controls">
+				<div class="controls_plays">
+					<svg id="prev_btn" viewBox="0 0 24.5 23.6">
+						<polygon points="0,11.8 13.5,0 13.5,10.7 24.5,0 24.5,23.6 13.5,12.9 13.5,23.6 "/>
+					</svg>
+
+					<svg id="plays_btn" viewBox="0 0 24.5 30.9">
+						<g id="play_btn">
+							<path d="M0,30.9L0,0l24.5,15.4L0,30.9z"/>
+						</g>
+
+						<g id="pause_btn">
+							<rect x="0" y="0" width="8.2" height="30.9"/>
+							<rect x="16.2" y="0" width="8.2" height="30.9"/>
+						</g>
+					</svg>
+
+					<svg id="next_btn" viewBox="0 0 24.5 23.6">
+						<polygon points="25,11.8 11.5,0 11.5,10.7 0.5,0 0.5,23.6 11.5,12.9 11.5,23.6 "/>
+					</svg>
+				</div>
+
+				<div class="controls_player">
+					<div class="soundBarGrp">
+						<svg id="volume_btn" viewBox="0 0 23 23">
+							<path d="M17.5,6.6v9.9L11.4,13H5.5v-3h6L17.5,6.6z M10.7,7H2.5v9h8.2l9.8,5.3V1.2L10.7,7z"/>
+						</svg>
+	
+						<input type="range" id="soundBar" min="0" max="1000" value="1000">
+					</div>
+
+					<svg id="shuffle_btn" viewBox="0 0 23 23">
+						<path d="M7.3,6l0.4,2.8l3.6-5l-5-3.6l0.5,3C3.6,4.4,1.1,7.4,1.1,11c0,4.4,2.4,8,7.4,8.3v-2.7c-3-0.3-4.7-2.7-4.7-5.6C3.8,8.8,5.5,7,7.3,6z"/>
+						<path d="M21.5,11c0-4.4-4-8-8-8.3v2.7c2,0.3,5.2,2.7,5.2,5.6c0,2.2-1.2,4-3,5l-0.4-2.8l-3.6,5l5,3.6l-0.6-3C19.4,17.6,21.5,14.6,21.5,11z"/>
+					</svg>
+
+					<svg id="playlist_btn" viewBox="0 0 23 23">
+						<rect x="1.5" y="2" width="20" height="3"/>
+						<rect x="1.5" y="9" width="20" height="3"/>
+						<rect x="1.5" y="17" width="20" height="3"/>
+					</svg>
+				</div>
+			</div>
+		</div>
+
+		<script src="index.js"></script>
+	</body>
+</html>
