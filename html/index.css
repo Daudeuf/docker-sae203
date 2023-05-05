@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+
+body{
+	background-color: #252322;
+	font-family: 'Roboto', sans-serif;
+	margin: 0 0 0 0;
+}
+
+nav{
+	background-color: #0F0F0F;
+	display:inline-flex;
+	justify-content:space-between;
+	width:100%;
+	align-items: center;
+}
+
+nav * {
+	vertical-align: middle;
+	line-height: normal;
+}
+
+h1{
+	color:white;
+	font-family: 'Bebas Neue', cursive;
+	padding-left: 10px;
+}
+
+.box{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.boxTop{
+	display: inline-flex;
+	flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.boxSpecial {
+	border: 1px;
+	border-radius: 6px;
+	border-color: black;
+	border-style: solid;
+	background-color: rgb(25, 25, 25);
+	padding-left: 10px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	margin-right: 12px;
+	margin-left: 12px;
+}
+
+.attente {
+	width: 350px;
+}
+
+.block{
+	border: 1px;
+	border-radius: 6px;
+	border-color: black;
+	border-style: solid;
+	background-color: black;
+	width: 200px;
+	box-shadow: 2px 2px 2px #2463EB;
+	padding-left: 10px;
+	padding-top: 10px;
+	margin-top: 15px;
+	margin-bottom: 25px;
+	margin-right: 12px;
+	margin-left: 12px;
+}
+
+.blockTitle{
+	color: #2463EB;
+	font-weight: bold;
+	font-size: 20px;
+	margin-top: 5px;
+}
+
+.songTitle{
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.artist{
+	color: grey;
+}
+
+#text-input{
+	width:220px;
+	height:40px;
+	border-radius:30Px;
+	padding-left: 20px;
+}
+
+audio {
+	position: absolute;
+}
+
+h2 {
+	font-size: 26px;
+	margin: 14px 0;
+	font-weight: 700;
+}
+h3 {
+	font-size: 16px;
+	font-weight: 400;
+}
+p {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 400;
+	margin-bottom: 10px;
+	color: white;
+}
+a {
+	text-decoration: none;
+	color: #9d57e4;
+}
+.audio-player {
+	position: fixed;
+	bottom:0;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: space-between;
+	transition: all 0.2s;
+	width: 100%;
+	background: black;
+	box-sizing: border-box;
+	margin:0;
+	border: 1px;
+	border-radius: 15px 15px 0px 0px;
+	border-color: rgb(25, 25, 25);
+	border-style: solid;
+}
+
+.info {
+	padding: 16px 30px;
+	display: inline-block;
+}
+
+.controls {
+	display: flex;
+	background: black;
+	margin-top: -1px;
+	padding: 20px;
+	transition: all 0.2s;
+}
+.controls_plays {
+	flex: 2;
+	display: flex;
+	justify-content: space-around;
+}
+.controls_player {
+	flex: 1;
+	fill: #A0204C;
+	display: flex;
+	justify-content: space-around;
+}
+
+#plays_btn, #prev_btn, #next_btn {
+	cursor: pointer;
+	fill: white;
+	width: 26px;
+	max-width: 18px;
+	transition: all 0.2s;
+}
+#plays_btn:hover, #prev_btn:hover, #next_btn:hover {
+	fill: #2463EB;
+}
+#pause_btn {
+	display: none;
+}
+#volume_btn, #shuffle_btn, #playlist_btn {
+	cursor: pointer;
+	width: 23px;
+	max-width: 18px;
+	transition: all 0.2s;
+}
+#volume_btn:hover, #shuffle_btn:hover, #playlist_btn:hover {
+	fill: #2463EB;
+}
+
+#progressBar {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 6px;
+	background: linear-gradient(to right, #2463EB 0%, #A0204C 0%);
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+#progressBar:hover {
+	opacity: 1;
+}
+
+#soundBar {
+	margin-left: 10px;
+	-webkit-appearance: none;
+	appearance: none;
+	height: 6px;
+	background: linear-gradient(to right, #A0204C 100%, #1d1d1d 100%);
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+#soundBar:hover {
+	opacity: 1;
+}
+
+/* Curseur pour WebKit */
+#soundBar::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #A0204C;
+	cursor: pointer;
+	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+/* Curseur pour Gecko */
+#soundBar::-moz-range-thumb {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #A0204C;
+	cursor: pointer;
+	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+.soundBarGrp {
+	display: flex;
+	align-items: center;
+}
+
+img {
+	border-radius: 10px;
+}
+
+#songInfo{
+	color: white;
+}
