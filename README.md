@@ -17,7 +17,7 @@ git clone https://github.com/Daudeuf/docker-sae203.git
 3. Accédez au répertoire de l'application :
 
 ```shell
-cd utilisation-docker-sae203
+cd docker-sae203
 ```
 
 4. Compilez l'image Docker à l'aide de la commande suivante :
