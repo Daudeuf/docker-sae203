@@ -19,7 +19,7 @@ INSERT INTO `tracks` (`titre`, `artiste`, `lien`) VALUES
 ('Ramenez la coupe à la maison', 'Vegedream', 'https://open.spotify.com/track/45eY7Qi2PDUs8WJEhjGWdN'),
 ('Party Rock Anthem', 'LMFAO', 'https://open.spotify.com/track/7mitXLIMCflkhZiD34uEQI'),
 ('Pump It', 'Black Eyed Peas', 'https://open.spotify.com/track/2ygMBIctKIAfbEBcT9065L'),
-('Turn Down For What', 'Dj Snake, Lil Jon', 'https://open.spotify.com/track/67awxiNHNyjMXhVgsHuIrs'),
+('Turn Down for What', 'Dj Snake, Lil Jon', 'https://open.spotify.com/track/67awxiNHNyjMXhVgsHuIrs'),
 ('Bâtiment', 'Niska', 'https://open.spotify.com/track/7FF6HRsQlc0CtfAbLmrEGX'),
 ('Burgers', 'Les Jones', 'https://open.spotify.com/track/6KuGgTwvTa7A5WEKubUD4g'),
 ('Cette année-là', 'Claude François', 'https://open.spotify.com/track/3R4rbnUNQKpKo588EFOqTl'),
