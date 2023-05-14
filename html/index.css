@@ -137,7 +137,7 @@ a {
 }
 
 .info {
-	padding: 16px 30px;
+	padding: 0px 30px;
 	display: inline-block;
 }
 
@@ -248,4 +248,8 @@ img {
 
 #songInfo{
 	color: white;
+}
+
+#space {
+ height: 170px;
 }
