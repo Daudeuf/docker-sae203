@@ -1,11 +1,11 @@
-const form = document.querySelector('form');
-const textInput = document.querySelector('#text-input');
-const songInfo = document.querySelector('#songInfo');
-const audio = document.querySelector('#audio');
-const plays_btn = document.querySelector('#plays_btn');
+const form        = document.querySelector('form');
+const textInput   = document.querySelector('#text-input');
+const songInfo    = document.querySelector('#songInfo');
+const audio       = document.querySelector('#audio');
+const plays_btn   = document.querySelector('#plays_btn');
 const progressBar = document.getElementById('progressBar');
-const soundBar = document.getElementById('soundBar');
-const songBox = document.querySelector('.songBox');
+const soundBar    = document.getElementById('soundBar');
+const songBox     = document.querySelector('.songBox');
 
 var jsmediatags = window.jsmediatags;
 
@@ -74,7 +74,13 @@ audio.addEventListener("timeupdate", function() {
 });
 
 progressBar.addEventListener("change", () => {
-	if (!isNaN(audio.duration)) audio.currentTime = (progressBar.value / 10000) * audio.duration;
+	if (!isNaN(audio.duration))
+	{
+		console.log(audio.currentTime);
+		var time = Math.round((progressBar.value / 10000) * audio.duration);
+		audio.currentTime = time;
+		console.log(audio.currentTime, time);
+	}
 });
 
 progressBar.addEventListener("input", () => {
@@ -96,42 +102,34 @@ document.onkeydown=function(evt){
 		console.log(`Termes recherchés : ${textInput.value}`);
 		event.preventDefault(); // empêcher l'envoi du formulaire
 		const text = textInput.value;
-		const submit_code = "download";
 		textInput.value = '';
 
-		fetch('http://localhost:3000/submit',
+		fetch('http://localhost:3000/loadTrack',
 		{
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ text, submit_code })
+			body: JSON.stringify({ text })
 		}).then(response => response.text()).then(data =>
 		{
-			console.log(`Fichier : ${data}.mp3`);
-
-			songInfo.innerHTML = `${data}`;
-			audio.innerHTML = `<source src="tracks/${data}.mp3" type="audio/mpeg">`;
-
-			audio.load();
-			audio.play();
+			const song = JSON.parse(data);
 
 			updateSong();
+			play(song);
 		}).catch(error => console.error(`Erreur : ${error}`));
 	}
 }
 
 function updateSong()
 {
-	const submit_code = "get_all_song";
-
-	fetch('http://localhost:3000/submit',
+	fetch('http://localhost:3000/getAllTracks',
 	{
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ submit_code })
+		body: JSON.stringify({})
 	}).then(response => response.text()).then(jsonString =>
 	{
 		const data = JSON.parse(jsonString);
@@ -139,11 +137,10 @@ function updateSong()
 		songBox.innerHTML = '';
 
 		data.forEach(async function(song) {
-			const imageDataUrl = await getSongImage(`${song.artiste} - ${song.titre}.mp3`);
 			const blockHTML = `
-				<div class="block" data-song-id="${song.id}">
-					<p class="blockTitle">${song.titre} - ${song.artiste}</p>
-					<img src="${imageDataUrl}" alt="${song.titre}-cover" style="width: 160px; height: 140px;">
+				<div class="block" data-song-id="${song.videoId}">
+					<p class="blockTitle">${song.titre}</p>
+					<img src="${song.image}" alt="${song.titre}-cover" style="width: 140px; height: 140px; object-fit: cover;">
 					<p class="songTitle">${song.titre}</p><br />
 					<p class="artist">${song.artiste}</p>
 				</div>
@@ -155,43 +152,13 @@ function updateSong()
 	}).catch(error => console.error(`Erreur : ${error}`));
 }
 
-function getSongImage(filename)
+function play(song)
 {
-	return new Promise(async (resolve, reject) => {
-		const mp3Blob = await createMp3Blob(`tracks/${filename}`);
+	songInfo.innerHTML = `${song.artiste} - ${song.titre}`;
+	audio.innerHTML = `<source src="http://localhost:3000/getTrackSound?videoId=${song.videoId}" type="audio/webm">`;
 
-		jsmediatags.read(mp3Blob, {
-			onSuccess: function(tag) {
-				var tags = tag;
-
-				var picture = tags.tags.picture; // create reference to track art
-				var base64String = "";
-				for (var i = 0; i < picture.data.length; i++) {
-					base64String += String.fromCharCode(picture.data[i]);
-				}
-				var imageUri = "data:" + picture.format + ";base64," + window.btoa(base64String);
-
-				resolve(imageUri)
-			}, 
-			onError: function(error) {
-				reject(error)
-			}
-		});
-	});
-}
-
-async function createMp3Blob(filename) {
-	try {
-		const response = await fetch(filename);
-		if (!response.ok) {
-		throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-		const mp3Blob = await response.blob();
-		return mp3Blob;
-	} catch (error) {
-		console.error("Une erreur est survenue lors de la création du blob MP3 :", error);
-		throw error;
-	}
+	audio.load();
+	audio.play();
 }
 
 // Appel initial lors de l'ouverture de la page

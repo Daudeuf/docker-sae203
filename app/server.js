@@ -1,11 +1,11 @@
-const express	= require('express');
-const cors	   = require('cors');
-const bodyParser = require('body-parser');
-const fs		 = require('fs');
-const mariadb	= require('mariadb');
-
-const track_finder	 = require('./track_finder');
-const track_downloader = require('./track_downloader');
+const express         = require('express');
+const cors            = require('cors');
+const bodyParser      = require('body-parser');
+const fs              = require('fs');
+const mariadb         = require('mariadb');
+const ytSearch        = require('yt-search');
+const youtubedl       = require('youtube-dl-exec')
+const axios           = require('axios');
 
 const pool = mariadb.createPool({
 	host: 'localhost',
@@ -21,76 +21,98 @@ app.use(cors()); // permettre les requêtes cross-origin
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/submit', async (req, res) => {
-	if (req.body.submit_code == "download")
-	{
-		// Récupération des termes à rechercher
-		const text = req.body.text;
-		console.log(`Les termes recherchés sont : ${text}`);
+app.post('/loadTrack', async (req, res) => {
+	const query = req.body.text;
+	console.log(`Les termes recherchés sont : ${query}`);
 
-		// Utilisez le module pour trouver un titre Spotify
-		const lien = await track_finder(text);
-		console.log('Titre Spotify trouvé:', lien);
+	// Récupération du videoId
+	const { videos } = await ytSearch(query);
+	const videoId = videos[0].videoId;
+
+	// Récupération des information du titre
+	youtubedl(`https://youtube.com/watch?v=${videoId}`, {
+		dumpSingleJson: true,
+		noCheckCertificates: true,
+		noWarnings: true,
+		preferFreeFormats: true,
+		addHeader: [
+			'referer:youtube.com',
+			'user-agent:googlebot'
+		]
+	}).then(async output => {
+		const title     = output.title;
+		const thumbnail = output.thumbnail;
+		const artiste   = output.uploader;
 
 		// Vérification de la présence du titre dans la base de données
-		if (await isInDatabase(lien))
-		{
+		if (await isInDatabase(videoId)) {
 			console.log("Titre déjà existant");
-		}
-		else
-		{
-			console.log("Titre non existant");
-
-			// Utilisez le module pour télécharger le son Spotify
-			const result = await track_downloader(lien);
-			console.log('Titre téléchargé');
-
-			await addSong(lien, result.title, result.artist);
+		} else {
+			console.log("Titre non existant, ajout en cour . . .");
+			await addSong(videoId, title, artiste, thumbnail);
 		}
 
-		var data = await getData(lien);
+		res.send(JSON.stringify(await getData(videoId)));
+	})
+});
 
-		res.send(`${data.artiste} - ${data.titre}`);
+app.post('/getAllTracks', async (req, res) => {
+	try {
+		const rows = await databaseQuery(`SELECT * FROM tracks`);
+		res.send(rows);
+	} catch (error) {
+		console.error('[5] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
+		res.send({});
 	}
-	else // donc get_all_song
-	{
-		try {
-			const rows = await databaseQuery(`SELECT * FROM tracks`);
-			res.send(rows);
-		} catch (error) {
-			console.error('[5] Erreur lors de la vérification de la présence du lien dans la base de données :', error);
-			res.send({});
-		}
-	}
+});
+
+app.get('/getTrackSound', async (req, res) => {
+	youtubedl(`https://youtube.com/watch?v=${req.query.videoId}`, {
+		dumpSingleJson: true,
+		noCheckCertificates: true,
+		noWarnings: true,
+		preferFreeFormats: true,
+		addHeader: [
+			'referer:youtube.com',
+			'user-agent:googlebot'
+		]
+	}).then(output => {
+		output.requested_formats.forEach(element => {
+			if (element.resolution == 'audio only') {
+				axios.get(element.url, { responseType: 'stream' }).then(response => { response.data.pipe(res); }).catch(error => {});
+				return;
+			}
+		});
+	})
 });
 
 app.listen(3000, () => {
 	console.log('Le serveur est en cours d\'exécution sur le port 3000.');
 });
 
-async function isInDatabase(lien) {
+async function isInDatabase(videoId) {
 	try {
-		const rows = await databaseQuery(`SELECT * FROM tracks WHERE lien = '${lien}'`);
+		const rows = await databaseQuery(`SELECT * FROM tracks WHERE videoId = '${videoId}'`);
 		return rows.length > 0;
 	} catch (error) {
-		console.error('[1] Erreur lors de la vérification de la présence du lien dans la base de données :', error);
+		console.error('[1] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
 		return false;
 	}
 }
 
-async function getData(lien) {
+async function getData(videoId) {
 	try {
-		const rows = await databaseQuery(`SELECT * FROM tracks WHERE lien = '${lien}'`);
+		const rows = await databaseQuery(`SELECT * FROM tracks WHERE videoId = '${videoId}'`);
 		return rows[0];
 	} catch (error) {
-		console.error('[2] Erreur lors de la vérification de la présence du lien dans la base de données :', error);
+		console.error('[2] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
 		return {};
 	}
 }
 
-async function addSong(lien, titre, artiste) {
+async function addSong(videoId, titre, artiste, image) {
 	try {
-		await databaseQuery(`INSERT INTO tracks (titre, artiste, lien) VALUES ('${titre}', '${artiste}', '${lien}')`);
+		await databaseQuery(`INSERT INTO tracks (titre, artiste, videoId, image) VALUES ('${titre}', '${artiste}', '${videoId}', '${image}')`);
 	} catch (error) {
 		console.error('[3] Erreur lors de l\'insertion de la ligne dans la base de données :', error);
 	}
