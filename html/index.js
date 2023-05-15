@@ -7,8 +7,11 @@ const progressBar       = document.getElementById('progressBar');
 const soundBar          = document.getElementById('soundBar');
 const songBox           = document.querySelector('.songBox');
 const mostViewedBox     = document.querySelector('.mostViewed');
+const queueBox          = document.querySelector('.queue');
 
 let isDragging = false;
+
+var queue = [];
 
 document.getElementById("plays_btn").addEventListener("click", function() {
 	var audio = document.getElementsByTagName("audio")[0];
@@ -69,6 +72,16 @@ audio.addEventListener("timeupdate", function() {
 	}
 });
 
+audio.addEventListener("ended", function() {
+	if (queue.length >= 1)
+	{
+		const song = queue.shift();
+
+		play(song);
+		updateQueue();
+	}
+});
+
 progressBar.addEventListener("change", () => {
 	if (!isNaN(audio.duration))
 	{
@@ -108,7 +121,7 @@ document.onkeydown = function(evt){
 			const song = JSON.parse(data);
 
 			updateSong();
-			play(song);
+			addToQueue(song);
 		}).catch(error => console.error(`Erreur : ${error}`));
 	}
 }
@@ -156,6 +169,8 @@ function updateMostViewed()
 			mostViewedBox.insertAdjacentHTML('beforeend', formatBlock(song, false));
 		});
 
+		clickable();
+
 	}).catch(error => console.error(error));
 }
 
@@ -192,6 +207,19 @@ function addView(videoId)
 		},
 		body: JSON.stringify({videoId})
 	});
+}
+
+function addToQueue(song)
+{
+	if (audio.currentSrc == "" || audio.ended)
+	{
+		play(song);
+	}
+	else
+	{
+		queue.push(song);
+		updateQueue();
+	}
 }
 
 function play(song)
@@ -236,9 +264,18 @@ function clickable()
 				body: JSON.stringify({videoId})
 			}).then(response => response.text()).then(song =>
 			{
-				play(JSON.parse(song));
+				addToQueue(JSON.parse(song));
 			}).catch(error => console.error(`Erreur : ${error}`));
 		}
+	});
+}
+
+function updateQueue()
+{
+	queueBox.innerHTML = '';
+
+	queue.forEach(async function(song) {
+		queueBox.insertAdjacentHTML('beforeend', `<div class="waitingElement"><p class="songTitleWaiting">${song.titre}</p><p class="artistWaiting">${song.artiste}</p></div>`);
 	});
 }
 
