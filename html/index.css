@@ -39,12 +39,11 @@ h1{
 }
 
 .boxSpecial {
-	border: 1px;
+	border: 1px solid black;
 	border-radius: 6px;
-	border-color: black;
-	border-style: solid;
 	background-color: rgb(25, 25, 25);
 	padding-left: 10px;
+	padding-right: 10px;
 	margin-top: 25px;
 	margin-bottom: 25px;
 	margin-right: 12px;
@@ -56,10 +55,8 @@ h1{
 }
 
 .block{
-	border: 1px;
+	border: 1px solid black;
 	border-radius: 6px;
-	border-color: black;
-	border-style: solid;
 	background-color: black;
 	width: 200px;
 	box-shadow: 2px 2px 2px #2463EB;
@@ -90,6 +87,7 @@ h1{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 190px;
+	margin-bottom: 0px;
 }
 
 .artist{
@@ -98,6 +96,7 @@ h1{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 198px;
+	margin-top: 0px;
 }
 
 .songTitleWaiting{
@@ -105,10 +104,19 @@ h1{
 	font-weight: bold;
 	font-size: 15px;
 	padding-right: 10px;
+	margin: 0 0 0 0;
 }
 
 .artistWaiting{
 	color: grey;
+	margin: 0 0 0 0;
+}
+
+.waitingElement {
+	margin-top: 10px;
+	border: 1px solid black;
+	border-radius: 6px;
+	padding: 2px 5px 2px 5px;
 }
 
 #text-input{
