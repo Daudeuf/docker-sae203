@@ -148,8 +148,10 @@ function updateSong()
 			const blockHTML = `
 				<div class="block" data-song-id="${song.videoId}">
 					<p class="blockTitle">${song.titre}</p>
+					<br>
 					<img src="${song.image}" alt="${song.titre}-cover" style="width: 140px; height: 140px; object-fit: cover;">
-					<p class="songTitle">${song.titre}</p><br />
+					<br>
+					<p class="songTitle">${song.titre}</p>
 					<p class="artist">${song.artiste}</p>
 				</div>
 			`;

@@ -76,15 +76,38 @@ h1{
 	font-weight: bold;
 	font-size: 20px;
 	margin-top: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 198px;
 }
 
 .songTitle{
 	color: white;
 	font-weight: bold;
 	font-size: 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 190px;
 }
 
 .artist{
+	color: grey;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 198px;
+}
+
+.songTitleWaiting{
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	padding-right: 10px;
+}
+
+.artistWaiting{
 	color: grey;
 }
 
