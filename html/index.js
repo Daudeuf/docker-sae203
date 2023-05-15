@@ -73,21 +73,10 @@ audio.addEventListener("timeupdate", function() {
 	}
 });
 
-audio.addEventListener('canplaythrough', function() {
-	console.log('Le fichier audio peut être lu jusqu\'à la fin.');
-});
-
-audio.addEventListener('canplay', function() {
-	console.log('Le flux audio est prêt à être joué.');
-});
-
 progressBar.addEventListener("change", () => {
 	if (!isNaN(audio.duration))
 	{
-		console.log(audio.currentTime);
-		var time = Math.round((progressBar.value / 10000) * audio.duration);
-		audio.currentTime = time;
-		console.log(audio.currentTime, time);
+		audio.currentTime = Math.round((progressBar.value / 10000) * audio.duration);
 	}
 });
 
@@ -107,7 +96,6 @@ document.onkeydown=function(evt){
 	var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
 	if(keyCode == 13)
 	{
-		console.log(`Termes recherchés : ${textInput.value}`);
 		event.preventDefault(); // empêcher l'envoi du formulaire
 		const text = textInput.value;
 		textInput.value = '';
