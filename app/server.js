@@ -66,6 +66,16 @@ app.post('/getAllTracks', async (req, res) => {
 	}
 });
 
+app.post('/getMostViewed', async (req, res) => {
+	try {
+		const rows = await databaseQuery(`SELECT * FROM tracks ORDER BY view DESC LIMIT 4`);
+		res.send(rows);
+	} catch (error) {
+		console.error('[5] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
+		res.send({});
+	}
+});
+
 app.post('/getTrackSound', async (req, res) => {
 	youtubedl(`https://youtube.com/watch?v=${req.body.videoId}`, {
 		dumpSingleJson: true,
@@ -83,6 +93,14 @@ app.post('/getTrackSound', async (req, res) => {
 			}
 		});
 	})
+});
+
+app.post('/addView', async (req, res) => {
+	try {
+		await databaseQuery(`UPDATE tracks SET view = view + 1 WHERE videoId = '${req.body.videoId}'`);
+	} catch (error) {
+		console.error('[5] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
+	}
 });
 
 app.listen(3000, () => {

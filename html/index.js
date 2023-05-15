@@ -1,11 +1,12 @@
-const form        = document.querySelector('form');
-const textInput   = document.querySelector('#text-input');
-const songInfo    = document.querySelector('#songInfo');
-const audio       = document.querySelector('#audio');
-const plays_btn   = document.querySelector('#plays_btn');
-const progressBar = document.getElementById('progressBar');
-const soundBar    = document.getElementById('soundBar');
-const songBox     = document.querySelector('.songBox');
+const form              = document.querySelector('form');
+const textInput         = document.querySelector('#text-input');
+const songInfo          = document.querySelector('#songInfo');
+const audio             = document.querySelector('#audio');
+const plays_btn         = document.querySelector('#plays_btn');
+const progressBar       = document.getElementById('progressBar');
+const soundBar          = document.getElementById('soundBar');
+const songBox           = document.querySelector('.songBox');
+const mostViewedBox     = document.querySelector('.mostViewed');
 
 var jsmediatags = window.jsmediatags;
 
@@ -133,21 +134,67 @@ function updateSong()
 		songBox.innerHTML = '';
 
 		data.forEach(async function(song) {
-			const blockHTML = `
-				<div class="block" data-song-id="${song.videoId}">
-					<p class="blockTitle">${song.titre}</p>
-					<br>
-					<img src="${song.image}" alt="${song.titre}-cover" style="width: 140px; height: 140px; object-fit: cover;">
-					<br>
-					<p class="songTitle">${song.titre}</p>
-					<p class="artist">${song.artiste}</p>
-				</div>
-			`;
-
-			songBox.insertAdjacentHTML('beforeend', blockHTML);
+			songBox.insertAdjacentHTML('beforeend', formatBlock(song, true));
 		});
 
 	}).catch(error => console.error(`Erreur : ${error}`));
+}
+
+function updateMostViewed()
+{
+	fetch('http://localhost:3000/getMostViewed',
+	{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({})
+	}).then(response => response.text()).then(jsonString =>
+	{
+		const data = JSON.parse(jsonString);
+
+		mostViewedBox.innerHTML = '';
+
+		data.forEach(async function(song) {
+			mostViewedBox.insertAdjacentHTML('beforeend', formatBlock(song, false));
+		});
+
+	}).catch(error => console.error(error));
+}
+
+function formatBlock(song, doFirstTitle)
+{
+	let blockHTML = `
+		<div class="block" data-song-id="${song.videoId}">
+	`;
+
+	if (doFirstTitle)
+		blockHTML += `
+			<p class="blockTitle">${song.titre}</p>
+			<br>
+		`;
+
+	blockHTML += `
+		<img src="${song.image}" alt="${song.titre}-cover" style="width: 140px; height: 140px; object-fit: cover;">
+		<br>
+		<p class="songTitle">${song.titre}</p>
+		<p class="artist">${song.artiste}</p>
+	</div>
+	`;
+
+	return blockHTML;
+}
+
+function addView(videoId)
+{
+	fetch('http://localhost:3000/addView',
+	{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({videoId})
+	});
 }
 
 function play(song)
@@ -170,8 +217,11 @@ function play(song)
 		audio.load();
 		audio.play();
 
+		addView(videoId);
+
 	}).catch(error => console.error(`Erreur : ${error}`));
 }
 
 // Appel initial lors de l'ouverture de la page
 updateSong();
+updateMostViewed();

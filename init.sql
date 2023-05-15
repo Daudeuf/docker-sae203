@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS tracks (
 	artiste VARCHAR(255) NOT NULL,
 	videoId LONGTEXT,
 	image LONGTEXT,
+	view INT NOT NULL DEFAULT 0,
 	PRIMARY KEY (id)
 );
 
