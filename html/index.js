@@ -8,8 +8,6 @@ const soundBar          = document.getElementById('soundBar');
 const songBox           = document.querySelector('.songBox');
 const mostViewedBox     = document.querySelector('.mostViewed');
 
-var jsmediatags = window.jsmediatags;
-
 let isDragging = false;
 
 document.getElementById("plays_btn").addEventListener("click", function() {
@@ -41,9 +39,6 @@ function updateProgressbarColor(value)
 	const colorRight = '#A0204C';
 	progressBar.style.background = `linear-gradient(to right, ${colorLeft} ${value/100}%, ${colorRight} ${value/100}%)`;
 }
-
-
-// count function for time
 
 audio.addEventListener("timeupdate", function() {
 	var time = document.getElementById('time'),
@@ -93,7 +88,7 @@ progressBar.addEventListener('mouseup', () => {
 	isDragging = false;
 });
 
-document.onkeydown=function(evt){
+document.onkeydown = function(evt){
 	var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
 	if(keyCode == 13)
 	{
