@@ -93,6 +93,10 @@ app.post('/getTrackSound', async (req, res) => {
 	})
 });
 
+app.post('/getTrack', async (req, res) => {
+	res.send(await getData(req.body.videoId));
+});
+
 app.post('/addView', async (req, res) => {
 	try {
 		await databaseQuery(`UPDATE tracks SET view = view + 1 WHERE videoId = '${req.body.videoId}'`);

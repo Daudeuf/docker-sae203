@@ -137,6 +137,8 @@ function updateSong()
 			songBox.insertAdjacentHTML('beforeend', formatBlock(song, true));
 		});
 
+		clickable();
+
 	}).catch(error => console.error(`Erreur : ${error}`));
 }
 
@@ -222,6 +224,29 @@ function play(song)
 	}).catch(error => console.error(`Erreur : ${error}`));
 }
 
+function clickable()
+{
+	const blockElements = document.querySelectorAll('.block');
+
+	blockElements.forEach(function(blockElement) {
+		blockElement.onclick = function() {
+			const videoId = blockElement.getAttribute('data-song-id');
+
+			fetch('http://localhost:3000/getTrack',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({videoId})
+			}).then(response => response.text()).then(song =>
+			{
+				play(JSON.parse(song));
+			}).catch(error => console.error(`Erreur : ${error}`));
+		}
+	});
+}
+
 // Appel initial lors de l'ouverture de la page
-updateSong();
 updateMostViewed();
+updateSong();
