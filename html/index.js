@@ -73,6 +73,14 @@ audio.addEventListener("timeupdate", function() {
 	}
 });
 
+audio.addEventListener('canplaythrough', function() {
+	console.log('Le fichier audio peut être lu jusqu\'à la fin.');
+});
+
+audio.addEventListener('canplay', function() {
+	console.log('Le flux audio est prêt à être joué.');
+});
+
 progressBar.addEventListener("change", () => {
 	if (!isNaN(audio.duration))
 	{
@@ -154,11 +162,25 @@ function updateSong()
 
 function play(song)
 {
-	songInfo.innerHTML = `${song.artiste} - ${song.titre}`;
-	audio.innerHTML = `<source src="http://localhost:3000/getTrackSound?videoId=${song.videoId}" type="audio/webm">`;
+	const videoId = song.videoId;
 
-	audio.load();
-	audio.play();
+	fetch('http://localhost:3000/getTrackSound',
+	{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({videoId})
+	}).then(response => response.text()).then(link =>
+	{
+
+		songInfo.innerHTML = `${song.artiste} - ${song.titre}`;
+		audio.innerHTML = `<source src="${link}" type="audio/webm">`;
+
+		audio.load();
+		audio.play();
+
+	}).catch(error => console.error(`Erreur : ${error}`));
 }
 
 // Appel initial lors de l'ouverture de la page

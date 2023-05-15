@@ -66,8 +66,8 @@ app.post('/getAllTracks', async (req, res) => {
 	}
 });
 
-app.get('/getTrackSound', async (req, res) => {
-	youtubedl(`https://youtube.com/watch?v=${req.query.videoId}`, {
+app.post('/getTrackSound', async (req, res) => {
+	youtubedl(`https://youtube.com/watch?v=${req.body.videoId}`, {
 		dumpSingleJson: true,
 		noCheckCertificates: true,
 		noWarnings: true,
@@ -79,8 +79,7 @@ app.get('/getTrackSound', async (req, res) => {
 	}).then(output => {
 		output.requested_formats.forEach(element => {
 			if (element.resolution == 'audio only') {
-				axios.get(element.url, { responseType: 'stream' }).then(response => { response.data.pipe(res); }).catch(error => {});
-				return;
+				res.send(element.url);
 			}
 		});
 	})
