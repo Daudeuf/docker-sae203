@@ -99,7 +99,8 @@ app.post('/getTrack', async (req, res) => {
 
 app.post('/addView', async (req, res) => {
 	try {
-		await databaseQuery(`UPDATE tracks SET view = view + 1 WHERE videoId = '${req.body.videoId}'`);
+		const videoId = req.body.videoId;
+		await databaseQuery(`UPDATE tracks SET view = view + 1 WHERE videoId = ?`, [videoId]);
 	} catch (error) {
 		console.error('[5] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
 	}
@@ -111,7 +112,7 @@ app.listen(3000, () => {
 
 async function isInDatabase(videoId) {
 	try {
-		const rows = await databaseQuery(`SELECT * FROM tracks WHERE videoId = '${videoId}'`);
+		const rows = await databaseQuery(`SELECT * FROM tracks WHERE videoId = ?`, [videoId]);
 		return rows.length > 0;
 	} catch (error) {
 		console.error('[1] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
@@ -121,7 +122,7 @@ async function isInDatabase(videoId) {
 
 async function getData(videoId) {
 	try {
-		const rows = await databaseQuery(`SELECT * FROM tracks WHERE videoId = '${videoId}'`);
+		const rows = await databaseQuery(`SELECT * FROM tracks WHERE videoId = ?`, [videoId]);
 		return rows[0];
 	} catch (error) {
 		console.error('[2] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
@@ -131,19 +132,20 @@ async function getData(videoId) {
 
 async function addSong(videoId, titre, artiste, image) {
 	try {
-		await databaseQuery(`INSERT INTO tracks (titre, artiste, videoId, image) VALUES ('${titre}', '${artiste}', '${videoId}', '${image}')`);
+		const values = [titre, artiste, videoId, image];
+		await databaseQuery(`INSERT INTO tracks (titre, artiste, videoId, image) VALUES (?, ?, ?, ?)`, values);
 	} catch (error) {
 		console.error('[3] Erreur lors de l\'insertion de la ligne dans la base de données :', error);
 	}
 }
 
 // Méthode pour simplifier les requêtes vers la base de données
-async function databaseQuery(query)
+async function databaseQuery(query, values)
 {
 	let conn;
 	try {
 		conn = await pool.getConnection();
-		return await conn.query(query);
+		return await conn.query(query, values);
 	} catch (error) {
 		console.error(`[4] Erreur lors de l'insertion de la ligne dans la base de données :\n\n${query}\n\nErreur :`, error);
 	} finally {
