@@ -1,11 +1,9 @@
 const express         = require('express');
 const cors            = require('cors');
 const bodyParser      = require('body-parser');
-const fs              = require('fs');
 const mariadb         = require('mariadb');
 const ytSearch        = require('yt-search');
 const youtubedl       = require('youtube-dl-exec')
-const axios           = require('axios');
 
 const pool = mariadb.createPool({
 	host: 'localhost',
