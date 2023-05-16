@@ -73,6 +73,6 @@ Si vous avez des questions, n'hésitez pas à les poser.
 
 ## Problèmes potentiels
 
-Lors de l'utilisation de cette application, il est possible que le chargement de la page web soit très long en raison de la connexion nécessaire pour accéder aux les titres musicaux. De plus, il est possible que le logiciel soit instable sur certains systèmes, en particulier sur les machines Windows et Mac.
+Lors de l'utilisation de cette application, il est possible que le chargement de la page web soit très long en raison de la connexion nécessaire pour accéder aux titres musicaux. De plus, il est possible que le logiciel soit instable sur certains systèmes, en particulier sur les machines Windows et Mac.
 
 Il est également important de noter que lors de la mise en place de Docker pendant la SAÉ, nous avons rencontré des problèmes importants qui ont empêché l'utilisation de Docker à son potentiel maximum.
