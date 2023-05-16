@@ -2,25 +2,26 @@
 body {
   background-color: #000000;
   color: #ffffff;
+  font-family: Arial, sans-serif;
+  padding: 40px;
 }
 
-nav {
-  background-color: #333333;
-  padding: 10px;
+main {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-nav li {
-  display: inline;
-  margin-right: 10px;
+p {
+  font-size: 18px;
+  line-height: 1.5;
 }
 
-nav a {
-  color: #ffffff;
-  text-decoration: none;
+a {
+  color: #ff0000;
 }
