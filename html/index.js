@@ -3,6 +3,8 @@ const textInput         = document.querySelector('#text-input');
 const songInfo          = document.querySelector('#songInfo');
 const audio             = document.querySelector('#audio');
 const plays_btn         = document.querySelector('#plays_btn');
+const back_btn          = document.querySelector('#prev_btn');
+const next_btn          = document.querySelector('#next_btn');
 const progressBar       = document.getElementById('progressBar');
 const soundBar          = document.getElementById('soundBar');
 const songBox           = document.querySelector('.songBox');
@@ -13,19 +15,43 @@ let isDragging = false;
 
 var queue = [];
 
-document.getElementById("plays_btn").addEventListener("click", function() {
+plays_btn.addEventListener("click", function() {
 	var audio = document.getElementsByTagName("audio")[0];
-	var playBtn = document.getElementById("play_btn");
-	var pauseBtn = document.getElementById("pause_btn");
 
 	if (!audio.paused) {
 		audio.pause();
+		isPlaying(false);
+	} else {
+		audio.play();
+		isPlaying(true);
+	}
+});
+
+function isPlaying(is)
+{
+	var playBtn = document.getElementById("play_btn");
+	var pauseBtn = document.getElementById("pause_btn");
+
+	if (!is) {
 		playBtn.style.display = "block";
 		pauseBtn.style.display = "none";
 	} else {
-		audio.play();
 		playBtn.style.display = "none";
 		pauseBtn.style.display = "block";
+	}
+}
+
+back_btn.addEventListener("click", function() {
+	audio.currentTime = 0;
+});
+
+next_btn.addEventListener("click", function() {
+	if (queue.length >= 1)
+	{
+		const song = queue.shift();
+
+		play(song);
+		updateQueue();
 	}
 });
 
@@ -241,6 +267,8 @@ function play(song)
 
 		audio.load();
 		audio.play();
+
+		isPlaying(true);
 
 		addView(videoId);
 

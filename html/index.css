@@ -210,14 +210,11 @@ a {
 #pause_btn {
 	display: none;
 }
-#volume_btn, #shuffle_btn, #playlist_btn {
+#volume_btn {
 	cursor: pointer;
 	width: 23px;
 	max-width: 18px;
 	transition: all 0.2s;
-}
-#volume_btn:hover, #shuffle_btn:hover, #playlist_btn:hover {
-	fill: #2463EB;
 }
 
 #progressBar {
