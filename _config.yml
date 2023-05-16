@@ -1,1 +1,17 @@
-theme: jekyll-theme-cayman
+# Configuration du site
+title: BlackMusic Theme
+description: Thème Jekyll BlackMusic
+
+# Configuration du thème
+theme: jekyll-theme-minimal
+
+# Configuration de la navigation
+nav:
+  - title: Accueil
+    url: /
+  - title: À propos
+    url: /about
+
+# Configuration du thème sombre
+blackmusic:
+  accent_color: "#ff0000" # Couleur d'accentuation de votre choix
