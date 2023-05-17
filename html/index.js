@@ -245,6 +245,10 @@ function addToQueue(song)
 	{
 		queue.push(song);
 		updateQueue();
+
+		var popup = document.getElementById("popup");
+		popup.classList.toggle("show");
+		setTimeout(() => {  popup.classList.toggle("show"); }, 5000);
 	}
 }
 
