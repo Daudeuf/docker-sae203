@@ -12,6 +12,7 @@ const mostViewedBox     = document.querySelector('.mostViewed');
 const queueBox          = document.querySelector('.queue');
 
 let isDragging = false;
+let isPopup    = false;
 
 var queue = [];
 
@@ -246,9 +247,22 @@ function addToQueue(song)
 		queue.push(song);
 		updateQueue();
 
-		var popup = document.getElementById("popup");
-		popup.classList.toggle("show");
-		setTimeout(() => {  popup.classList.toggle("show"); }, 5000);
+		if (!isPopup)
+		{
+			isPopup = true;
+			var popup = document.getElementById("popup");
+			popup.classList.toggle("show");
+
+			setTimeout(() => {
+				popup.classList.toggle("hide");
+
+				setTimeout(function() {
+					popup.classList.toggle("show");
+					popup.classList.toggle("hide");
+					isPopup = false;
+				}, 750);
+			}, 2000);
+		}
 	}
 }
 
