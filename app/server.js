@@ -10,7 +10,8 @@ const pool = mariadb.createPool({
 	user: 'root',
 	password: 'hsU3NRLttuCf5lp0TWYQ905U',
 	database: 'blackmusic',
-	connectionLimit: 5
+	connectionLimit: 5,
+	charset: 'utf8mb4'
 });
 
 const app = express();
@@ -38,9 +39,14 @@ app.post('/loadTrack', async (req, res) => {
 			'user-agent:googlebot'
 		]
 	}).then(async output => {
-		const title     = output.title;
-		const thumbnail = output.thumbnail;
-		const artiste   = output.uploader;
+		var parts     = removeContentInBrackets(output.title).split('-');
+		var thumbnail = output.thumbnail;
+		var artiste   = parts[0];
+		var title     = "";
+
+		for (let i = 1; i < parts.length; i++) {
+			title += parts[i];
+		}
 
 		// Vérification de la présence du titre dans la base de données
 		if (await isInDatabase(videoId)) {
@@ -56,7 +62,7 @@ app.post('/loadTrack', async (req, res) => {
 
 app.post('/getAllTracks', async (req, res) => {
 	try {
-		const rows = await databaseQuery(`SELECT * FROM tracks`);
+		const rows = await databaseQuery(`SELECT * FROM tracks ORDER BY id DESC`);
 		res.send(rows);
 	} catch (error) {
 		console.error('[5] Erreur lors de la vérification de la présence du videoId dans la base de données :', error);
@@ -152,3 +158,22 @@ async function databaseQuery(query, values)
 		if (conn) conn.release();
 	}
 }
+
+function removeContentInBrackets(inputString) {
+	let outputString = "";
+	let stack = [];
+  
+	for (let i = 0; i < inputString.length; i++) {
+	  const char = inputString[i];
+  
+	  if (char === '(' || char === '[' || char === '{') {
+		stack.push(char);
+	  } else if (char === ')' || char === ']' || char === '}') {
+		stack.pop();
+	  } else if (stack.length === 0) {
+		outputString += char;
+	  }
+	}
+  
+	return outputString;
+  }
