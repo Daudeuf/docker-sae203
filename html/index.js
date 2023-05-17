@@ -298,13 +298,35 @@ function clickable()
 	});
 }
 
+function clickableQueue()
+{
+	const waitingElements = document.querySelectorAll('.waitingElement');
+
+	waitingElements.forEach(function(waitingElement) {
+		waitingElement.onclick = function() {
+			const position  = parseInt(waitingElement.getAttribute('data-queue-position'));
+			console.log(position);
+
+			for (let i = 0; i < Math.min(queue.length, position); i++)
+			{
+				queue.shift()
+			}
+
+			play(queue.shift());
+			updateQueue();
+		}
+	});
+}
+
 function updateQueue()
 {
 	queueBox.innerHTML = '';
 
-	queue.forEach(async function(song) {
-		queueBox.insertAdjacentHTML('beforeend', `<div class="waitingElement"><p class="songTitleWaiting">${song.titre}</p><p class="artistWaiting">${song.artiste}</p></div>`);
-	});
+	for (let i = 0; i < queue.length; i++) {
+		queueBox.insertAdjacentHTML('beforeend', `<div class="waitingElement" data-queue-position="${i}"><p class="songTitleWaiting">${queue[i].titre}</p><p class="artistWaiting">${queue[i].artiste}</p></div>`);
+	}
+
+	clickableQueue();
 }
 
 // Appel initial lors de l'ouverture de la page
