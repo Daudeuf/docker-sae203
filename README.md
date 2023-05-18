@@ -41,6 +41,13 @@ Assurez-vous de remplacer `<nom-de-votre-image>` par le nom que vous avez donné
 Cette commande lance un conteneur Docker à partir de l'image `<nom-de-votre-image>`, en exposant le port 80 du conteneur sur le port 80 de l'hôte via l'option `-p 80:80`, ainsi que le port 3000 du conteneur sur le port 3000 de l'hôte via l'option `-p 3000:3000`. De plus, elle permet d'accéder à la page web hébergeant l'application. Le paramètre `-d` permet de lancer le conteneur en mode détaché (en arrière-plan) et le `-rm` permet de supprimer le conteneur lors de son arrêt.
 
 
+|port|utilisation  |
+|--|--|
+| :80 | Apache |
+| :3000 | Node js |
+| :3306 | Mariadb |
+
+
 ## Utilisation
 
 L'interface utilisateur de Blackmusic se compose des éléments suivants :
