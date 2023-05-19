@@ -12,21 +12,17 @@ $header-bg-color-secondary: #cf5605;
 
 // Text
 $section-headings-color: #cf5605;
-$body-text-color: #35373f;
-$body-link-color: #8ca2c5;
-$blockquote-text-color: #cfd8e1;
+$body-text-color: #606c71 ;
+$body-link-color: #1e6bb8 ;
+$blockquote-text-color: #819198 ;
 
 // Code
-$code-bg-color: #567482;
-$code-text-color: #35373f;
+$code-bg-color: #f3f6fa ;
+$code-text-color: #567482 ;
 
 // Borders
-$border-color: #45565e;
-$table-border-color: #3f4e54;
-$hr-border-color: #38444c;
+$border-color: #dce6f0 ;
+$table-border-color: #e9ebec ;
+$hr-border-color: #eff0f1 ;
 
 @import "{{ site.theme }}";
-
-body {
-	background-color: #35373f;
-}
