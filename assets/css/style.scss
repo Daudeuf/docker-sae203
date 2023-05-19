@@ -26,3 +26,7 @@ $table-border-color: #3f4e54;
 $hr-border-color: #38444c;
 
 @import "{{ site.theme }}";
+
+body {
+	background-color: #35373f;
+}
