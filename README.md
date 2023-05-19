@@ -41,7 +41,7 @@ Assurez-vous de remplacer `<nom-de-votre-image>` par le nom que vous avez donné
 Cette commande lance un conteneur Docker à partir de l'image `<nom-de-votre-image>`, en exposant le port 80 du conteneur sur le port 80 de l'hôte via l'option `-p 80:80`, ainsi que le port 3000 du conteneur sur le port 3000 de l'hôte via l'option `-p 3000:3000`. De plus, elle permet d'accéder à la page web hébergeant l'application. Le paramètre `-d` permet de lancer le conteneur en mode détaché (en arrière-plan) et le `-rm` permet de supprimer le conteneur lors de son arrêt.
 
 
-|port|utilisation  |
+|Port|Utilisation  |
 |--|--|
 | :80 | Apache |
 | :3000 | Node js |
@@ -49,19 +49,19 @@ Cette commande lance un conteneur Docker à partir de l'image `<nom-de-votre-ima
 
 ## Utilisation
 
-L'interface utilisateur de Blackmusic se compose des éléments suivants :
+L'interface utilisateur de Blackmusic est accessible via http://localhost:80/, elle se compose des éléments suivants :
 
 ### Section Tendance
 Cette section affiche les 4 titres les plus écoutés du moment. Elle met en avant les chansons populaires du moment et permet aux utilisateurs de découvrir les tendances musicales.
 
 ### File d'attente
-La file d'attente affiche les titres en attente de lecture. Lorsque les utilisateurs ajoutent des chansons à la file d'attente, elles apparaissent ici. Cela permet aux utilisateurs de créer une liste de lecture personnalisée.
+La file d'attente affiche les titres en attente de lecture. Lorsque les utilisateurs ajoutent des chansons à la file d'attente, elles apparaissent ici. Cela permet aux utilisateurs de créer une liste de lecture personnalisée. Si jamais l'utilisateur clique sur un titre se trouvant dans la file d'attente, il sera automatiquement joué.
 
 ### Titres
-Dans le reste de l'espace, tous les titres disponibles dans la bibliothèque de Blackmusic sont affichés. Les utilisateurs peuvent explorer cette section pour trouver de nouvelles chansons à écouter. Cela offre une vue d'ensemble de la collection musicale disponible sur la plateforme.
+Dans le reste de l'espace, tous les titres disponibles dans la bibliothèque de Blackmusic sont affichés. Les utilisateurs peuvent explorer cette section pour trouver de nouvelles chansons à écouter. Cela offre une vue d'ensemble de la collection musicale disponible sur la plateforme. L'utilisateur peut cliquer sur chaque titre pour les écouter ou les mettre dans la file d'attente si un titre est déjà en cours de lecture.
 
 ### Barre de recherche
-La barre de recherche permet aux utilisateurs d'effectuer des recherches et d'ajouter de nouveaux titres à la file d'attente. Les utilisateurs peuvent saisir des mots-clés, des artistes ou des titres spécifiques pour trouver les chansons qu'ils souhaitent écouter.
+La barre de recherche permet aux utilisateurs d'effectuer des recherches et d'ajouter de nouveaux titres à la file d'attente si un titre est déjà en cour de lecture. Les utilisateurs peuvent saisir des mots-clés, des artistes ou des titres spécifiques pour trouver les chansons qu'ils souhaitent écouter.
 
 ### Lecteur média interactif
 Blackmusic propose un lecteur média interactif qui permet aux utilisateurs de contrôler la lecture de la musique. Les fonctionnalités incluent la mise en pause, la reprise, la gestion du volume, etc. Les utilisateurs peuvent interagir avec le lecteur pour personnaliser leur expérience d'écoute.
