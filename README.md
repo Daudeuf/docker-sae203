@@ -45,7 +45,6 @@ Cette commande lance un conteneur Docker à partir de l'image `<nom-de-votre-ima
 |--|--|
 | :80 | Apache |
 | :3000 | Node js |
-| :3306 | Mariadb |
 
 
 ## Utilisation
