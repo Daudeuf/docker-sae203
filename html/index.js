@@ -323,7 +323,6 @@ function clickableQueue()
 	waitingElements.forEach(function(waitingElement) {
 		waitingElement.onclick = function() {
 			const position  = parseInt(waitingElement.getAttribute('data-queue-position'));
-			console.log(position);
 
 			for (let i = 0; i < Math.min(queue.length, position); i++)
 			{
